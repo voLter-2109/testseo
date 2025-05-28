@@ -1,0 +1,51 @@
+.btnBlock {
+  width: 100%;
+  text-align: center;
+}
+
+.addBtn {
+  padding: 5px 15px;
+  border-radius: 5px;
+  background-color: transparent;
+  border: none;
+  color: var(--main-color);
+  cursor: pointer;
+  text-decoration: solid;
+  transition: all 0.3s;
+  box-shadow: var(--shadow-lg);
+
+  @media (hover: hover) {
+    &:hover {
+      box-shadow: var(--shadow-xl);
+    }
+  }
+}
+
+.oldFile {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+
+  @media (prefers-color-scheme: dark) {
+    & svg path {
+      fill: var(--main-color);
+    }
+  }
+
+  .noModerate {
+    transform: scaleY(-1);
+    & svg path {
+      fill: var(--red-primary);
+    }
+  }
+  .moderate {
+    height: 20px;
+    width: 20px;
+    cursor: help;
+    &.click {
+      cursor: pointer;
+    }
+  }
+}

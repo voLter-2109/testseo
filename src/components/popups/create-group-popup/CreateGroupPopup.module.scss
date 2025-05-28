@@ -1,0 +1,44 @@
+.createGroupPopup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 20px;
+
+  .btn_svg {
+    width: 25px;
+    height: 25px;
+    transition: 0.3s all ease;
+
+    &:hover {
+      rotate: 180deg;
+    }
+  }
+
+  .createWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    width: 600px;
+
+    > input {
+      width: 100%;
+      height: 48px;
+      border: 1px solid #aeaeb2;
+      border-radius: 8px;
+      font-size: 18px;
+    }
+
+    > button {
+      width: 200px;
+      font-weight: 400;
+      outline: none;
+      border: none;
+      // background-color: #5856d6;
+    }
+  }
+
+  .lightTheme path {
+    fill: white;
+  }
+}

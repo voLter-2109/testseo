@@ -1,0 +1,13 @@
+.textWrapper {
+  border: none;
+  word-break: break-all;
+  color: var(--main-color);
+  // padding: 0 8px; N
+  // p {
+  //   word-break: break-all;
+  // }
+}
+
+.deletedText {
+  opacity: 0.8;
+}

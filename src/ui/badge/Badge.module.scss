@@ -1,0 +1,17 @@
+.badge {
+  text-align: center;
+  color: var(--text-color-white);
+  width: 46px;
+  padding: 2px 10px;
+  border-radius: 16px;
+  font-size: 1rem;
+  transition: all 0.3s;
+
+  &_new {
+    background-color: var(--brand-blue-primary);
+  }
+
+  &_muted {
+    background-color: #d1d1d6;
+  }
+}

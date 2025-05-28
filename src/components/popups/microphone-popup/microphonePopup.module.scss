@@ -1,0 +1,12 @@
+.modal {
+  display: flex;
+  padding: 30px 60px;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  gap: 30px;
+  width: 50vw;
+  .mic {
+    height: 20px;
+  }
+}

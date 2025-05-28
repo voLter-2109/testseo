@@ -1,0 +1,13 @@
+.audioWrapper {
+  display: flex;
+  flex-direction: column;
+  // width: 100%;
+  audio {
+    height: 40px;
+    max-width: 350px;
+    track {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

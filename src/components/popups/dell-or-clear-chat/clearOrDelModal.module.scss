@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 500px;
+  padding: 20px 24px;
+  border: none;
+  box-shadow: 0 0 24px 5px #1000c314;
+
+  p {
+    margin: 15px;
+    text-align: center;
+  }
+  .btn_svg {
+    width: 25px;
+    height: 25px;
+    transition: 0.3s all ease;
+
+    &:hover {
+      rotate: 180deg;
+    }
+  }
+  .lightTheme path {
+    fill: white;
+  }
+  .controls {
+    display: flex;
+    gap: 20px;
+  }
+
+  .ok {
+    padding: 5px 20px;
+    background-color: var(--brand-blue-hover);
+    color: #ffffff;
+  }
+
+  .cancel {
+    padding: 5px 35px;
+    border: 1px solid var(--brand-blue-hover); // #5856d6
+    color: var(--brand-blue-hover);
+    background-color: #fff;
+  }
+}

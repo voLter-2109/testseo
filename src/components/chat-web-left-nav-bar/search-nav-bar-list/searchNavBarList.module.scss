@@ -1,0 +1,60 @@
+.searchWrapper {
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  @media screen and (max-width: 540px) {
+    padding-bottom: 100px;
+  }
+
+  .showNotAll {
+    max-height: 420px;
+    transition: max-height 1s ease-in-out;
+    overflow: hidden;
+
+    &.showAll {
+      max-height: fit-content;
+    }
+  }
+
+  .icon {
+    width: 30px;
+    height: 30px;
+    margin-left: 18px;
+
+    & > path {
+      stroke: car(--main-color);
+    }
+  }
+
+  .btn {
+    cursor: pointer;
+    background-color: transparent;
+    transition: all 0.3s ease;
+    color: var(--main-color);
+    border: none;
+    font-size: 20px;
+    transform: rotate(90deg);
+    margin-left: 20px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+
+    @media (hover: hover) {
+      &:hover {
+        box-shadow: var(--shadow-lg);
+      }
+    }
+
+    &.showBtn {
+      transform: rotate(270deg);
+    }
+  }
+}
+
+:root[data-theme='dark'] {
+  .icon {
+    & > path {
+      fill: var(--main-color);
+      stroke: car(--main-color);
+    }
+  }
+}

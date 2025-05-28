@@ -1,0 +1,27 @@
+.popupInf {
+  width: 30vw;
+}
+
+@media screen and (max-width: 1024px) {
+  .popupInf {
+    width: 40vw;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .popupInf {
+    width: 60vw;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .popupInf {
+    width: 80vw;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .popupInf {
+    width: 90vw;
+  }
+}

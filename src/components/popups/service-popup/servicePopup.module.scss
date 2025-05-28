@@ -1,0 +1,69 @@
+.servicePopup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 500px;
+  padding: 20px 24px;
+  border: none;
+  box-shadow: 0 0 24px 5px #1000c314;
+
+  .serviceFormPopup {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .serviceFormHeader {
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+  }
+
+  .btn_svg {
+    width: 25px;
+    height: 25px;
+    transition: 0.3s all ease;
+
+    &:hover {
+      rotate: 180deg;
+    }
+  }
+
+  .lightTheme path {
+    fill: white;
+  }
+
+  .serviceForm {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 10px;
+    }
+
+    input, textarea {
+      padding: 10px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      outline: none;
+      border: 1px solid var(--text-disabled-color);
+
+      &:focus-visible,
+      &:focus,
+      &:focus-within {
+        border: 1px solid var(--brand-blue-primary);
+      }
+    }
+  }
+}

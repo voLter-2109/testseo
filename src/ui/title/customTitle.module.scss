@@ -1,0 +1,24 @@
+.titleDef {
+  width: 100%;
+  line-height: 36.31px;
+  text-align: center;
+  color: var(--main-color);
+
+  &.small {
+    font-size: 1.4rem;
+  }
+  &.medium {
+    font-size: 2rem;
+  }
+  &.large {
+    font-size: 2.5rem;
+  }
+
+  &.normal {
+    font-weight: 400;
+  }
+
+  &.bold {
+    font-weight: 600;
+  }
+}

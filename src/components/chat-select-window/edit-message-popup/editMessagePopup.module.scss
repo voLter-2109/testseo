@@ -1,0 +1,52 @@
+.editingPopup {
+  min-width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  @media (max-width: 920px) {
+    width: 80vw;
+  }
+
+  .editingMessageTitleWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 10px;
+
+    .btn_svg {
+      margin-left: auto;
+      width: 25px;
+      height: 25px;
+      transition: 0.3s all ease;
+
+      &:hover {
+        rotate: 180deg;
+      }
+    }
+
+    .editingMessageTitle {
+      text-align: center;
+    }
+  }
+
+  .editingMessageForm {
+    width: 100%;
+
+    .editingInput {
+      max-height: 50vh;
+      padding: 5px 20px;
+      border-radius: 10px;
+      background-color: var(--brand-blue-secondary);
+      margin-bottom: 10px;
+    }
+
+    .editingMessageButtonsWrapper {
+      max-width: 500px;
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      margin: 0 auto;
+    }
+  }
+}

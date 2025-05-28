@@ -1,0 +1,46 @@
+.customSelectWrapper {
+  width: 100%;
+  transition: all 0.3s;
+
+  .react-select-custom {
+    &__control {
+      height: 45px;
+      padding: 3px 6px;
+      min-width: 250px;
+      transition: all 0.3s ease;
+      border-radius: 10px;
+      border: 1px solid var(--text-disabled-color);
+
+      display: flex;
+      align-content: center;
+
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+
+      @media (hover: hover) {
+        &:hover,
+        &:focus-within {
+          border: 1px solid var(--text-disabled-color);
+          box-shadow: var(--shadow-lg);
+        }
+      }
+    }
+
+    &,
+    &__control {
+      background-color: var(--text-color-white);
+    }
+
+    &__menu-list {
+      color: var(--text-color-black);
+    }
+  }
+  .marginBlock {
+    height: 20px;
+  }
+}
+
+.errorMessage {
+  height: 20px;
+}

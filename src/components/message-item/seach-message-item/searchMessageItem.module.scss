@@ -1,0 +1,32 @@
+.message_wrapper {
+  display: flex;
+  box-shadow: var(--shadow-lg);
+  transition: 0.3s all ease;
+  padding: 3px 4px 3px 6px;
+  gap: 12px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  height: 54px;
+  border-radius: 12px;
+
+  .wrapperAvatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .content {
+    width: 100%;
+
+    .name {
+      font-weight: 500;
+      font-size: 14px;
+      opacity: 0.6;
+    }
+
+    .message {
+      display: flex;
+      gap: 8px;
+    }
+  }
+}

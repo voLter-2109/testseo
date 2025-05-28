@@ -1,0 +1,34 @@
+ const {
+    register,
+    formState: { errors },
+    trigger,
+    watch,
+    resetField,
+    setFocus,
+  } = useFormContext();
+  const errorMessage = useYapErrorMessage(errors, name);
+  const registerWithMask = useHookFormMask(register);
+
+  const isInputNumber = watch(`${name}`);
+
+  const handleBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
+    event.target.value = event.target.value.trim();
+    await trigger(name);
+  };
+
+1. создать hook для field input
+
+
+2. как запихнуть дженерик в Form, для data и сабмитфункции
+
+3. скачет верстка когда выходит ошибка на ввод 4-х значного кода
+
+4. добавить к кнопке disabled и отмену изменения цвета при hover при isLoading = true
+
+Екатерина:
+react-portal + hook useClickOutside - <div id=''.... для реактпортал разместить возле <Toaster /> в App
+Егор:
+Просмотреть и по возможности скорректировать axios-interceptors \ api-config \ api
+возможно поможет: https://dev.to/sundarbadagala081/axios-interceptors-34b2
+
+5. вынести логику получения и повторный запрос юзера в отдельную хук

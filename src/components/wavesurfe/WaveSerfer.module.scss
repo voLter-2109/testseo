@@ -1,0 +1,38 @@
+.waveserfer {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  align-items: center;
+  flex-direction: row;
+  gap: 1rem;
+  margin: 10px;
+
+  .playerBlock {
+    width: 100%;
+    line-height: 0.8;
+    > span {
+      font-size: smaller;
+    }
+  }
+
+  .playPause {
+    cursor: pointer;
+    background: none;
+    outline: none;
+    border-radius: unset;
+    border: 0px solid transparent;
+    transition: all 0.2s ease-in-out;
+
+    .pict {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        > path {
+          fill: #9f9fac;
+        }
+      }
+    }
+  }
+}

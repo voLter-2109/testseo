@@ -1,0 +1,72 @@
+.topBar {
+  width: 350px;
+  height: 48px;
+  display: flex;
+  gap: 8px;
+  padding: 8px 0 0 8px;
+  align-items: center;
+
+  @media (max-width: 540px) {
+    & {
+      width: 100%;
+    }
+  }
+
+  .search {
+    width: 90%;
+
+    @media (max-width: 540px) {
+      & {
+        width: 100%;
+      }
+    }
+  }
+
+  .addBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .contextMenu {
+    position: fixed;
+    visibility: visible;
+    top: 168px !important;
+    bottom: unset !important;
+    left: 313px !important;
+    z-index: 1001;
+    overflow: hidden;
+    border-radius: 5px;
+    padding: 4px;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--grey-primary);
+    filter: drop-shadow(2px 4px 6px black);
+
+    > div > div {
+      padding: 8px;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+
+      @media (hover: hover) {
+        &:hover {
+          background-color: var(--brand-blue-secondary);
+        }
+      }
+    }
+  }
+
+  .contextMenuHide {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .attachBtn {
+    cursor: pointer;
+  }
+}

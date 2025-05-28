@@ -1,0 +1,59 @@
+.wrapperInput {
+  height: 35px;
+  padding: 3px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid var(--text-disabled-color);
+  &:focus-visible,
+  &:focus,
+  &:focus-within {
+    border: 2px solid var(--brand-blue-primary);
+  }
+
+  &,
+  & .input {
+    background-color: var(--background-main);
+    color: var(--main-color);
+  }
+
+  .input {
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    margin: 0 5px;
+    &:focus-visible,
+    &:focus,
+    &:focus-within {
+      border-style: none;
+      outline: none;
+    }
+  }
+
+  .after {
+    width: 27px;
+  }
+  .clear {
+    width: 27px;
+    background-color: transparent;
+  }
+  .before {
+    width: 20px;
+  }
+  .after,
+  .before {
+    height: 100%;
+    padding: 0;
+    border: none;
+  }
+}
+
+:root[data-theme='dark'] {
+  .clear {
+    background-color: var(--main-color);
+  }
+}

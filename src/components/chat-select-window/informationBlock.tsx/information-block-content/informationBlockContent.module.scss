@@ -1,0 +1,60 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  width: 100%;
+  transition: all 0.3s ease;
+  font-size: 0.8rem;
+  color: var(--grey-primary);
+  max-height: 70svh;
+  overflow-y: auto;
+  margin-bottom: 20px;
+
+  .header_wrapper {
+    padding: 0px 20px 32px;
+    border-top-right-radius: 12px;
+  }
+  .info_wrapper {
+    padding: 16px 20px;
+  }
+  h3 {
+    font-size: 1.5rem;
+    color: var(--main-color);
+  }
+  .name {
+    font-size: 1.2rem;
+    color: var(--main-color);
+  }
+  > ul > li {
+    margin-bottom: 16px;
+  }
+  > ul > h4 {
+    font-size: 1.1rem;
+    color: var(--main-color);
+  }
+  > button {
+    align-self: center;
+    margin-bottom: 10px;
+  }
+}
+
+.icon:before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  left: -10px;
+  top: 5px;
+  position: relative;
+}
+
+.icon_specialization:before {
+  background: url('../../../../assets/doctors/doctor_specialization.svg')
+    no-repeat;
+}
+
+.icon_scientific_degree_label:before {
+  background: url('../../../../assets/doctors/doctor_scientific_degree_label.svg')
+    no-repeat;
+}

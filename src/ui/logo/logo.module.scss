@@ -1,0 +1,16 @@
+.logo {
+  cursor: pointer;
+  &:before {
+    display: inline-block;
+    content: '';
+    width: 135px;
+    height: 48px;
+    background: var(--logo);
+  }
+  &_big {
+    content: '';
+    width: 225px;
+    height: 80px;
+    background: var(--logo-big);
+  }
+}

@@ -1,0 +1,114 @@
+.wrapper {
+  width: 100%;
+  transition: all 0.3s;
+
+  .wrapperInput {
+    height: 45px;
+    padding: 3px 6px;
+    min-width: 250px;
+    transition: all 0.3s ease;
+
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+    border-radius: 10px;
+    border: 1px solid var(--text-disabled-color);
+
+    @media (hover: hover) {
+      &:hover:has(.input:not(:disabled)) {
+        border: 1px solid var(--text-disabled-color);
+        box-shadow: var(--shadow-lg);
+      }
+    }
+
+    &,
+    & .input {
+      background-color: var(--text-color-white);
+    }
+
+    .after {
+      width: 30px;
+      height: 30px;
+      margin-left: 4px;
+      font-size: 1rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .input {
+      width: 100%;
+      flex-grow: 1;
+      font-weight: 400;
+      line-height: 150%;
+      padding: 0;
+      letter-spacing: 0.08px;
+      background-color: var(--text-color-white);
+      color: var(--text-color-black);
+      border: none;
+      outline: none;
+      font-variant-numeric: tabular-nums;
+
+      &::file-selector-button {
+        display: none;
+      }
+
+      &:before {
+        border: 1px solid red;
+        border-radius: 3px 8px 3px 8px;
+        color: red;
+        content: attr(value) '+';
+        margin-right: 10px;
+        padding: 5px;
+      }
+    }
+
+    &:focus-within {
+      border: 1px solid var(--graphic-grey-secondary);
+    }
+
+    &.error {
+      border: 1px solid var(--red-primary);
+    }
+  }
+  .wrapperInput:has(.input:disabled) {
+    opacity: 0.9;
+  }
+  .input:disabled {
+    color: hsl(0, 0%, 60%);
+  }
+  .errorMessage {
+    height: 20px;
+  }
+
+  .oldFile {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+
+    @media (prefers-color-scheme: dark) {
+      & svg path {
+        fill: var(--main-color);
+      }
+    }
+
+    .noModerate {
+      transform: scaleY(-1);
+      & svg path {
+        fill: var(--red-primary);
+      }
+    }
+    .moderate {
+      height: 20px;
+      width: 20px;
+      cursor: help;
+      &.click {
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+.wrapperSkeleton {
+  &_chat {
+    & .skeleton:nth-child(2n) {
+      flex-direction: row-reverse;
+
+      .rotate {
+        flex-direction: row-reverse;
+      }
+    }
+
+    .skeleton {
+      width: 100%;
+      display: flex;
+      padding: 3px 4px;
+      margin-top: 10px;
+
+      .rotate {
+        width: 70%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      &__message {
+        flex: 1;
+        overflow: hidden;
+        border-radius: 20px;
+      }
+    }
+  }
+
+  &_other {
+    .skeleton {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      padding: 3px 4px;
+      margin-top: 10px;
+      border-radius: 12px;
+      &__message {
+        flex: 1;
+      }
+    }
+  }
+}
