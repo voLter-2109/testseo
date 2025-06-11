@@ -1,22 +1,27 @@
 import classNames from 'classnames';
-import { FC, memo, useMemo, useRef } from 'react';
+import { FC, memo, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { useContextMenu } from 'react-contexify';
+
+import tempChannelImg from '../../assets/side-menu/tempChannelImg.jpg';
+import tempGroupImg from '../../assets/side-menu/tempGroupImg.png';
 
 import useWindowResize from '../../hooks/useWindowResize';
 import useChatListStore from '../../store/chatListStore';
 import useUserStore from '../../store/userStore';
 import { ChatsListItem } from '../../types/chat/chat';
-import checkTypeLastMessage from '../../utils/chat/chekTypeLastMessage';
-import dateFormatter from '../../utils/chat/dateFormatter';
-
-import { ReactComponent as Clip } from '../../assets/chat-list/clip.svg';
 import Badge from '../../ui/badge/Badge';
 import OnlineCheck from '../../ui/OnlineCheck/OnlineCheck';
 import Avatar from '../avatar/Avatar';
 
+import checkTypeLastMessage from '../../utils/chat/chekTypeLastMessage';
+import dateFormatter from '../../utils/chat/dateFormatter';
 import getTimeFromDate from '../../utils/chat/getTimeFromDate';
+
+import { ReactComponent as Clip } from '../../assets/chat-list/clip.svg';
+
+import { TChannels } from '../../types/websoket/websoket.types';
 
 import style from './ChatItem.module.scss';
 
@@ -30,10 +35,13 @@ const ChatItem: FC<ChatsListItemProps> = (props) => {
     last_message: lastMessage,
     new_message_count: newMessageCount,
     is_active: isActiveChat,
-    id,
     is_favorite: isFavorite,
     isTableBarActive,
+    type,
+    name,
+    id,
   } = props;
+
   const {
     avatar_url: avatarUrl,
     avatar_webp_url: avatarWebpUrl,
@@ -48,28 +56,28 @@ const ChatItem: FC<ChatsListItemProps> = (props) => {
     state.getOnlineStateByUserUid(uid)
   );
 
-  const chatItemRef = useRef<HTMLDivElement | null>(null);
-
   const titleOnline = useMemo(() => {
-    if (isOnline) {
-      return 'в сети';
-    }
-    if (!isOnline && wasOnlineAt) {
+    if (isOnline) return 'в сети';
+    if (!isOnline && wasOnlineAt)
       return `был в сети ${getTimeFromDate(wasOnlineAt)}`;
-    }
-
     return 'не в сети';
-  }, [isOnline]);
+  }, [isOnline, wasOnlineAt]);
+
   const { user } = useUserStore();
 
   const haveSpecialization = useMemo(() => {
-    if (specialization && specialization.length > 0 && specialization[0].name)
-      return true;
-
-    return false;
-  }, [chat]);
+    return (
+      specialization && specialization.length > 0 && specialization[0].name
+    );
+  }, [specialization]);
 
   const { table, mobileL } = useWindowResize();
+
+  const extraTableBarClass = useMemo(() => {
+    return isTableBarActive
+      ? classNames(style.badgeTable, style.badgeTable_active)
+      : style.badgeTable;
+  }, [isTableBarActive]);
 
   const { show } = useContextMenu({ id: 'chat-context-menu' });
 
@@ -84,7 +92,6 @@ const ChatItem: FC<ChatsListItemProps> = (props) => {
 
     return true;
   });
-
   const displayMenu = (event: React.MouseEvent<HTMLElement>) => {
     show({
       id: 'chat-context-menu',
@@ -102,16 +109,65 @@ const ChatItem: FC<ChatsListItemProps> = (props) => {
     });
   };
 
-  const extraTableBarClass = useMemo(() => {
-    return isTableBarActive
-      ? classNames(style.badgeTable, style.badgeTable_active)
-      : style.badgeTable;
-  }, [isTableBarActive]);
+  const getDefaultAvatar = () => {
+    if (type === TChannels.PUBLIC_GROUP || type === TChannels.PRIVATE_GROUP) {
+      return tempGroupImg;
+    }
+    if (
+      type === TChannels.PUBLIC_CHANNEL ||
+      type === TChannels.PRIVATE_CHANNEL
+    ) {
+      return tempChannelImg;
+    }
+    return undefined;
+  };
+
+  const getAvatar = () => {
+    return avatarWebpUrl || avatarUrl || getDefaultAvatar();
+  };
+
+  const getTitle = () => {
+    if (type === TChannels.CHAT) {
+      return user?.uid !== uid
+        ? [firstName, lastName, patronymic].filter(Boolean).join(' ') ||
+            'Фамилия Имя Отчество'
+        : 'Избранное (Вы)';
+    }
+    return name || 'Без имени';
+  };
+
+  const getMessage = () => {
+    return lastMessage && checkTypeLastMessage(lastMessage);
+  };
+
+  const getDate = () => {
+    return lastMessage ? dateFormatter(lastMessage.created_at) : <span />;
+  };
+
+  const getBadge = () => {
+    if (newMessageCount > 0) {
+      if (table && !mobileL) {
+        return (
+          <Badge
+            count={newMessageCount}
+            type="new"
+            extraClass={extraTableBarClass}
+          />
+        );
+      }
+      return <Badge count={newMessageCount} type="new" />;
+    }
+    return <div style={{ width: '46px', height: '24px' }} />;
+  };
+
+  const showOnline =
+    type === TChannels.CHAT || type === TChannels.PRIVATE_GROUP;
 
   return (
-    <div ref={chatItemRef}>
+    <div>
       <NavLink
         to={uid}
+        onContextMenu={displayMenu}
         className={({ isActive, isPending }) =>
           classNames(style.chatItem, {
             [style.favorite]: isFavorite,
@@ -119,42 +175,30 @@ const ChatItem: FC<ChatsListItemProps> = (props) => {
             [style.isPending]: isPending,
           })
         }
-        onContextMenu={(event) => {
-          displayMenu(event);
-        }}
       >
         <div className={style.wrapperAvatar}>
           <Avatar
-            img={avatarWebpUrl || avatarUrl}
+            img={getAvatar()}
             size="medium"
             extraClassName={style.chatItemAvatar}
           />
-          <div title={titleOnline}>
-            <OnlineCheck isOnline={isOnline} />
-          </div>
+          {showOnline && (
+            <div title={titleOnline}>
+              <OnlineCheck isOnline={isOnline} />
+            </div>
+          )}
         </div>
         <div className={style.content}>
-          <h3 className={style.name} title={firstName}>
-            {user?.uid !== uid
-              ? lastName && firstName
-                ? `${lastName} ${firstName} ${patronymic}`
-                : 'Фамилия Имя Отчество'
-              : 'Избранное (Вы)'}
+          <h3 className={style.name} title={getTitle()}>
+            {getTitle()}
           </h3>
-          {haveSpecialization &&
-            (chat.specialization === null ? (
-              <h4 className={style.specialization}>Доктор</h4>
-            ) : user?.uid !== uid ? (
-              <h4 className={style.specialization}>
-                {chat.specialization?.[0].name}
-              </h4>
-            ) : null)}
-          {specialization?.length === 0 && (
-            <h4 className={style.specialization}>Доктор</h4>
+          {type === TChannels.CHAT && haveSpecialization && (
+            <h4 className={style.specialization}>
+              {chat.specialization?.[0]?.name || 'Доктор'}
+            </h4>
           )}
-
           <div id={`preview${lastMessage?.id}`} className={style.message}>
-            {lastMessage && checkTypeLastMessage(lastMessage)}
+            {getMessage()}
           </div>
         </div>
         <div
@@ -162,27 +206,9 @@ const ChatItem: FC<ChatsListItemProps> = (props) => {
             [style.info_bottom]: !newMessageCount,
           })}
         >
-          {newMessageCount > 0 ? (
-            table && !mobileL ? (
-              <Badge
-                count={newMessageCount}
-                type="new"
-                extraClass={extraTableBarClass}
-              />
-            ) : (
-              <Badge count={newMessageCount} type="new" />
-            )
-          ) : (
-            <div style={{ width: '46px', height: '24px' }} />
-          )}
+          {getBadge()}
           {isFavorite && <Clip className={style.clip} />}
-          <div className={style.date}>
-            {lastMessage ? (
-              <>{dateFormatter(lastMessage?.created_at)}</>
-            ) : (
-              <span />
-            )}
-          </div>
+          <div className={style.date}>{getDate()}</div>
         </div>
       </NavLink>
     </div>

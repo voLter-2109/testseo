@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { Interweave } from 'interweave';
 import { FC, useMemo } from 'react';
+
 import { MessageListItem } from '../../../types/chat/messageListItem';
 
 import avatar from '../../../assets/side-menu/avatar.svg';
@@ -12,6 +13,7 @@ import {
   AUDIO_TYPE_FORMAT,
   FILE_TYPE_FORMAT,
 } from '../../../constant/infoTooltipMessages';
+
 import dateFormatter from '../../../utils/chat/dateFormatter';
 
 import style from './searchMessageItem.module.scss';

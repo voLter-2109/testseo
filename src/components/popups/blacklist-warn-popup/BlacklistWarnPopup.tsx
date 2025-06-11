@@ -1,12 +1,10 @@
-import classNames from 'classnames';
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 
-import { ThemeContext } from '../../../providers/ThemeProvider';
-
-import { ReactComponent as Cross } from '../../../assets/create-profile/cross.svg';
 import Popup from '../../../ui/popup/Popup';
 
 import CustomButton from '../../../ui/custom-button/Button';
+
+import CrossBtn from '../../../ui/cross-button/CrossBtn';
 
 import style from './BlacklistWarnPopup.module.scss';
 
@@ -21,19 +19,17 @@ const BlacklistWarnPopup: FC<BlacklistWarnPopupProps> = ({
   onClose,
   confirmAddToBL,
 }) => {
-  const theme = useContext(ThemeContext);
-
-  const handleApprove = async () => {
+  const handleApprove = () => {
     try {
-      await confirmAddToBL(true);
+      confirmAddToBL(true);
     } finally {
       onClose();
     }
   };
 
-  const handleCancel = async () => {
+  const handleCancel = () => {
     try {
-      await confirmAddToBL(false);
+      confirmAddToBL(false);
     } finally {
       onClose();
     }
@@ -47,12 +43,7 @@ const BlacklistWarnPopup: FC<BlacklistWarnPopupProps> = ({
           onClose={onClose}
           isOpen={isOpen}
         >
-          <Cross
-            className={classNames(style.btn_svg, {
-              [style.lightTheme]: theme?.theme === 'dark',
-            })}
-            onClick={onClose}
-          />
+          <CrossBtn onClick={onClose} />
           <div className={style.dialog}>
             <p className={style.warn}>
               Если вы заблокируете пользователя, то он не сможет с вами

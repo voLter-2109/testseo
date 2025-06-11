@@ -4,19 +4,19 @@ import {
   HTMLAttributes,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
-import { ReactComponent as Cross } from '../../../assets/create-profile/cross.svg';
 import { DoctorInfo } from '../../../types/doctor/doctor';
 
 import Spinner from '../../../ui/spinner/Spinner';
 
 import CustomButton from '../../../ui/custom-button/Button';
 import Attachments from '../../attachments/Attachments';
+
+import CrossBtn from '../../../ui/cross-button/CrossBtn';
 
 import InformationBlockContent from './information-block-content/InformationBlockContent';
 
@@ -58,16 +58,6 @@ const InformationBlock: FC<Props> = ({
     setTrigger('info');
   }, [setTrigger]);
 
-  const memoizedCross = useMemo(
-    () => (
-      <Cross
-        onClick={handleToggleInfInformationPanel}
-        className={classNames(style.btn_svg)}
-      />
-    ),
-    []
-  );
-
   if (isLoading || !uid) {
     return (
       <div
@@ -82,19 +72,11 @@ const InformationBlock: FC<Props> = ({
     );
   }
 
-  // if (!uid) {
-  //   return (
-  //     <div className={classNames(HTMLDivElementAttr.className, style.wrapper)}>
-  //       <OutletLoading />
-  //     </div>
-  //   );
-  // }
-
   // ! задача refetch doctor сделать внутри компонента InformationBlockContent
   return (
     <div className={classNames(HTMLDivElementAttr.className, style.wrapper)}>
       <div className={style.headerInf}>
-        {memoizedCross}
+        <CrossBtn onClick={handleToggleInfInformationPanel} />
         <div className={style.infoBlock}>
           {doctorInfo && (
             <CustomButton

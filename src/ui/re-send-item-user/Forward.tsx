@@ -12,6 +12,8 @@ import { WebSocketContext } from '../../providers/Websoket';
 
 import { MessageListItem } from '../../types/chat/messageListItem';
 
+import { TChannels } from '../../types/websoket/websoket.types';
+
 import ReSendUserItem from './ReSendUserItem';
 
 import style from './reSendUserItem.module.scss';
@@ -51,7 +53,10 @@ const Forward: FC<FrowardProps> = ({
       toggleForwardPopup();
 
       uidChat.forEach((item, index) => {
+        // TODO: forwarding from channels and groups
         handleCreateTextMessage({
+          chatKey: '',
+          type: TChannels.CHAT,
           toUserUid: item,
           content: {
             textContent: ' ',

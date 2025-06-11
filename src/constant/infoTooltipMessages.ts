@@ -52,6 +52,13 @@ export const ALLOWED_IMAGE_TYPE_FORMAT = [
   'image/psd',
 ];
 
+export const ALLOWED_CHANEL_IMAGE_TYPE_FORMAT = [
+  'image/jpeg',
+  'image/jpg',
+  'image/bmp',
+  'image/png',
+];
+
 export const ALLOWED_FILE_EXT_REGEX =
   /(\.pdf|\.docx|\.doc|\.xlsx|\.rar|\.zip|\.rtf|\.txt)$/;
 export const FILE_TYPE_FORMAT = [

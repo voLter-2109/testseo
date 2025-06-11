@@ -20,10 +20,10 @@ interface IChatListProfileStore {
   userList: Record<string, UserList>;
   addUserInList: ({
     uid,
-    userDate,
+    userData,
   }: {
     uid: string;
-    userDate: UserList;
+    userData: UserList;
   }) => void;
   resetChatAfterClear: (uidChat: number) => void;
   setLastMessageOnChatByUserUid: ({
@@ -144,17 +144,7 @@ const useChatListStore = create<IChatListProfileStore>()(
               const prevList = state.chatListStore;
               chatList.forEach((item) => {
                 let checkDoctor = false;
-                const {
-                  avatar,
-                  avatar_url,
-                  avatar_webp,
-                  avatar_webp_url,
-                  first_name,
-                  last_name,
-                  uid,
-                  specialization,
-                  patronymic,
-                } = item.chat;
+                const { specialization } = item.chat;
 
                 if (
                   specialization !== null &&
@@ -165,16 +155,8 @@ const useChatListStore = create<IChatListProfileStore>()(
                 }
 
                 state.userList[item.chat.uid] = {
-                  uid,
-                  avatar_webp,
-                  avatar_webp_url,
-                  first_name,
-                  last_name,
-                  patronymic,
-                  avatar,
-                  avatar_url,
-                  is_online: false,
-                  is_doctor_check: checkDoctor,
+                  ...item.chat,
+                  is_doctor: checkDoctor,
                 };
               });
 
@@ -192,11 +174,11 @@ const useChatListStore = create<IChatListProfileStore>()(
             'set chat list store'
           ),
         // список юзеров из чатов что бы подтягивать имя
-        addUserInList: ({ uid, userDate }) => {
+        addUserInList: ({ uid, userData }) => {
           set(
             (state) => {
               const { userList } = state;
-              userList[uid] = userDate;
+              userList[uid] = userData;
             },
             false,
             'add user in list'

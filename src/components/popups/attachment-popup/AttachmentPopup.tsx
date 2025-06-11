@@ -15,6 +15,8 @@ import { MessageListItem } from '../../../types/chat/messageListItem';
 import { useEventListener } from '../../../hooks/useEventListener';
 import useWindowResize from '../../../hooks/useWindowResize';
 
+import { TChannels } from '../../../types/websoket/websoket.types';
+
 import style from './AttachmentPopup.module.scss';
 
 interface AttachmentPopupProps {
@@ -24,6 +26,8 @@ interface AttachmentPopupProps {
   onClose: () => void;
   resetSelectMes: () => void;
   selectRepliedMes: MessageListItem | null;
+  chatKey: string;
+  chatType: TChannels;
 }
 
 const AttachmentPopup: FC<AttachmentPopupProps> = ({
@@ -33,6 +37,8 @@ const AttachmentPopup: FC<AttachmentPopupProps> = ({
   onClose,
   resetSelectMes,
   selectRepliedMes,
+  chatKey,
+  chatType,
 }) => {
   const { uid } = useParams<{ uid: string }>();
   const contextSocket = useContext(WebSocketContext);
@@ -77,6 +83,8 @@ const AttachmentPopup: FC<AttachmentPopupProps> = ({
           repliedMEssage: selectRepliedMes ? [selectRepliedMes] : [],
         };
         handleCreateTextMessage({
+          chatKey,
+          type: chatType,
           toUserUid: uid,
           content,
           resetValue: () => {

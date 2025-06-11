@@ -5,7 +5,6 @@ import { DoctorInfo } from '../../../types/doctor/doctor';
 import RootBoundaryComponent from '../../../ui/error-component/RootBoundaryComponent';
 import NavBarChatList from '../nav-bar-list/chatList/NavBarChatList';
 import NavBarDoctorList from '../nav-bar-list/doctorList/NavBarDoctorList';
-import NavBarChannelList from '../nav-bar-list/channelList.tsx/NavBarChannelList';
 
 type Props = {
   isError: boolean;
@@ -14,7 +13,6 @@ type Props = {
   isFetchDoctor: boolean;
   isTableBarActive: boolean;
   isShowArchivedChats: boolean;
-  isShowChannels: boolean;
   chatList: ChatsListItem[] | undefined;
   doctorsList: DoctorInfo[] | undefined;
   refDoctor: (node?: Element | null) => void;
@@ -30,18 +28,9 @@ const DefaultNavBarList: FC<Props> = ({
   doctorsList,
   isTableBarActive,
   isShowArchivedChats,
-  isShowChannels,
 }) => {
   if (isError)
     return <RootBoundaryComponent refreshFunc={refresh} ariaTitle="обновить" />;
-
-  if (isShowChannels) {
-    return (
-      <>
-        <NavBarChannelList />
-      </>
-    );
-  }
 
   if (chatList && chatList.length > 0) {
     return (

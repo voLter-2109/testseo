@@ -14,6 +14,7 @@ import NavBarChatList from '../nav-bar-list/chatList/NavBarChatList';
 
 import { MessageListItem } from '../../../types/chat/messageListItem';
 import NavBarMessageList from '../nav-bar-list/messageList/NavBarMessageList';
+
 import style from './searchNavBarList.module.scss';
 
 type Props = {

@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 
 function useQuillRightClick<T extends HTMLDivElement>(
   quillRef: RefObject<T>,
@@ -6,6 +6,8 @@ function useQuillRightClick<T extends HTMLDivElement>(
   setQuillMenuIsShowing: (state: boolean) => void,
   value: string
 ) {
+  const valueRef = useRef(value);
+
   const getPosition = (ev: MouseEvent) => {
     let posx = 0;
     let posy = 0;
@@ -21,8 +23,15 @@ function useQuillRightClick<T extends HTMLDivElement>(
   };
 
   const handleClick = (ev: MouseEvent) => {
+    const raw = valueRef.current || '';
+    const isEmpty =
+      raw
+        .replace(/<(.|\n)*?>/g, '')
+        .replace(/&nbsp;/g, '')
+        .trim() === '';
+
     if (
-      value !== '<p><br></p>' &&
+      !isEmpty &&
       ev.button === 2 &&
       quillRef.current?.contains(ev.target as HTMLElement)
     ) {
@@ -37,6 +46,10 @@ function useQuillRightClick<T extends HTMLDivElement>(
       }
     }
   };
+
+  useEffect(() => {
+    valueRef.current = value;
+  }, [value]);
 
   useEffect(() => {
     document.addEventListener('contextmenu', handleClick);

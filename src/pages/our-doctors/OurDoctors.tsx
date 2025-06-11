@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { Link, Outlet, useParams } from 'react-router-dom';
 
 import { getDoctorsList } from '../../api/doctor/doctors';
 import OurDoctorsItem from '../../components/our-doctors-item/OurDoctorsItem';
@@ -22,6 +23,7 @@ import { MAX_DOCTORS_PER_PAGE } from '../../constant/filterParams';
 import sortBySpecializationMatch from '../../hooks/sortBySpecializationMatch';
 import { DoctorInfo } from '../../types/doctor/doctor';
 import Button from '../../ui/custom-button/Button';
+
 import style from './ourDoctors.module.scss';
 
 const OurDoctors = () => {
@@ -30,6 +32,8 @@ const OurDoctors = () => {
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const [doctors, setDoctors] = useState<DoctorInfo[]>([]);
+
+  const { doctorUid } = useParams();
 
   const {
     data,
@@ -139,45 +143,62 @@ const OurDoctors = () => {
 
   return (
     <div className={style.container}>
-      <CustomTitle bold="bold">Наши врачи</CustomTitle>
-      <div className={style.search}>
-        <InputSearch
-          handleResetValue={handleResetValue}
-          placeholder="Поиск"
-          onChange={handleChangeValue}
-          value={searchValue}
-        />
-      </div>
-      <div className={style.doctorsList}>
-        {doctors.length ? (
-          <div className={style.wrapper}>
-            {[...doctors].map((item, index) => (
-              <OurDoctorsItem
-                searchValue={searchValue}
-                key={item.id}
-                ref={index === doctors.length - 1 ? lastDoctorElementRef : null}
-                {...item}
-              />
-            ))}
-          </div>
-        ) : (
-          <p>Врачи не найдены</p>
-        )}
-        {hasNextPage && (
-          <div style={{ width: '100%', textAlign: 'center', marginTop: '5px' }}>
-            <Button
-              textBtn="Загрузить еще"
-              isLoading={isFetchingNextPage}
-              onClick={(e) => {
-                if (isFetchingNextPage || !hasNextPage) {
-                  return e.preventDefault();
-                }
-                return fetchNextPage();
-              }}
+      {doctorUid ? (
+        <Outlet />
+      ) : (
+        <>
+          <CustomTitle bold="bold">Наши врачи</CustomTitle>
+          <div className={style.search}>
+            <InputSearch
+              handleResetValue={handleResetValue}
+              placeholder="Поиск"
+              onChange={handleChangeValue}
+              value={searchValue}
             />
           </div>
-        )}
-      </div>
+          <div className={style.doctorsList}>
+            {doctors.length ? (
+              <div className={style.wrapper}>
+                {[...doctors].map((item, index) => (
+                  <div
+                    style={{ display: 'flex', flexDirection: 'column' }}
+                    key={item.id}
+                  >
+                    <Link to={item.id}>click</Link>
+                    <OurDoctorsItem
+                      searchValue={searchValue}
+                      ref={
+                        index === doctors.length - 1
+                          ? lastDoctorElementRef
+                          : null
+                      }
+                      {...item}
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>Врачи не найдены</p>
+            )}
+            {hasNextPage && (
+              <div
+                style={{ width: '100%', textAlign: 'center', marginTop: '5px' }}
+              >
+                <Button
+                  textBtn="Загрузить еще"
+                  isLoading={isFetchingNextPage}
+                  onClick={(e) => {
+                    if (isFetchingNextPage || !hasNextPage) {
+                      return e.preventDefault();
+                    }
+                    return fetchNextPage();
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

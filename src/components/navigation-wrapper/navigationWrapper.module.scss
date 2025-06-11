@@ -38,9 +38,10 @@
 }
 
 .link {
-  color: var(--main-color);
+  color: rgb(88, 86, 214);
   & > a {
-    font-size: 1.1rem;
+    font-size: 18px;
+    font-weight: 400;
     display: flex;
     gap: 7px;
 

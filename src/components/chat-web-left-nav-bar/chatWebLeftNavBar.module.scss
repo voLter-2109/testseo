@@ -36,7 +36,7 @@
     width: 360px;
     .icons {
       &Caption {
-        display: block;
+        opacity: 1;
       }
       &Icon {
         width: 40px;
@@ -52,12 +52,12 @@
       }
     }
     .topBarTitle {
-      display: block;
+      opacity: 1;
     }
   }
   .icons {
     &Caption {
-      display: none;
+      opacity: 0;
     }
     &Icon {
       display: flex;
@@ -100,6 +100,7 @@
     font-weight: 600;
     font-size: 1.1rem;
     line-height: 1.5;
+    transition: all 0.3s ease;
   }
 }
 

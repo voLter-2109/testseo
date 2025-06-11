@@ -1,22 +1,32 @@
 import { useMutation } from '@tanstack/react-query';
-import classNames from 'classnames';
-import { FC, useContext } from 'react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { ThemeContext } from '../../../providers/ThemeProvider';
 import Popup from '../../../ui/popup/Popup';
 
-import { ReactComponent as Cross } from '../../../assets/create-profile/cross.svg';
 import CustomButton from '../../../ui/custom-button/Button';
 
 import askSupportService from '../../../api/serivce/service';
 import useYapErrorMessage from '../../../hooks/useYapErrorMessage';
-import InputErrorMessage from '../../../ui/inputs/error-message/InputErrorMessage';
 
 import useUserStore from '../../../store/userStore';
 import { CreatedSupportMessage } from '../../../types/service/service';
+
+import { REQUIRED_TEXT } from '../../../constant/infoTooltipMessages';
+import ClearFieldBtn from '../../../ui/inputs/clear-filed-btn/ClearFieldBtn';
+import Input from '../../../ui/inputs/main-input/MainInput';
+
+import CrossBtn from '../../../ui/cross-button/CrossBtn';
+import InputErrorMessage from '../../../ui/inputs/error-message/InputErrorMessage';
+import Label from '../../../ui/inputs/label/Label';
+
 import style from './servicePopup.module.scss';
+
+enum NameFil {
+  EMAIL = 'email',
+  TEXT = 'text',
+}
 
 interface ServicePopupProps {
   isOpen: boolean;
@@ -24,14 +34,18 @@ interface ServicePopupProps {
 }
 
 const ServicePopup: FC<ServicePopupProps> = ({ isOpen, onClose }) => {
-  const theme = useContext(ThemeContext);
   const user = useUserStore((state) => state.user);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    trigger,
+    setValue,
+    setFocus,
+    watch,
   } = useForm<CreatedSupportMessage>({
+    mode: 'all',
     reValidateMode: 'onSubmit',
     defaultValues: {
       email: user?.email || '',
@@ -39,8 +53,21 @@ const ServicePopup: FC<ServicePopupProps> = ({ isOpen, onClose }) => {
     },
   });
 
-  const errorMessageEmail = useYapErrorMessage(errors, 'email');
-  const errorMessageText = useYapErrorMessage(errors, 'text');
+  const errorMessageEmail = useYapErrorMessage(errors, NameFil.EMAIL);
+  const errorMessageText = useYapErrorMessage(errors, NameFil.TEXT);
+
+  const isInputValueEmail = watch(NameFil.EMAIL);
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      console.log(value, name, type);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
+  useEffect(() => {
+    console.log(isInputValueEmail);
+  }, [isInputValueEmail]);
 
   const notifySuccess = (test: string, dur: number = 2000) =>
     toast.success(test, {
@@ -72,6 +99,12 @@ const ServicePopup: FC<ServicePopupProps> = ({ isOpen, onClose }) => {
     return mutate(data);
   };
 
+  const handleResetVale = async (n: NameFil) => {
+    setValue(n, '', { shouldValidate: false });
+    setFocus(n);
+    await trigger(n);
+  };
+
   return (
     <>
       {isOpen && (
@@ -84,12 +117,7 @@ const ServicePopup: FC<ServicePopupProps> = ({ isOpen, onClose }) => {
             <h3 className={style.serviceFormHeader}>
               Обращение в службу поддержки:
             </h3>
-            <Cross
-              className={classNames(style.btn_svg, {
-                [style.lightTheme]: theme?.theme === 'dark',
-              })}
-              onClick={onClose}
-            />
+            <CrossBtn onClick={onClose} />
           </div>
 
           <form
@@ -98,44 +126,54 @@ const ServicePopup: FC<ServicePopupProps> = ({ isOpen, onClose }) => {
               onSubmit(data);
             })}
           >
-            <label htmlFor="email">
-              Ваш почтовый адрес:
-              <input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                {...register('email', {
-                  required: 'Email is required',
-                  pattern: {
-                    value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                    message: 'Invalid email address',
-                  },
-                })}
-              />
-              {errorMessageEmail && (
-                <InputErrorMessage errorMessage={errorMessageEmail} />
-              )}
-            </label>
-
-            <label htmlFor="text">
-              Текст сообщения:
-              <textarea
-                id="text"
-                rows={4}
-                {...register('text', {
-                  required: 'Text is required',
-                })}
-              />
+            <Input
+              registerOptions={register(NameFil.EMAIL, {
+                required: REQUIRED_TEXT,
+                pattern: {
+                  value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                  message: 'Неверный формат',
+                },
+              })}
+              labelText="Ваш почтовый адрес:"
+              requiredLabel
+              errorMessage={errorMessageEmail}
+              name={NameFil.EMAIL}
+              type="text"
+              id={NameFil.EMAIL}
+              afterChunk={
+                isInputValueEmail ? (
+                  <ClearFieldBtn
+                    onClick={() => handleResetVale(NameFil.EMAIL)}
+                  />
+                ) : null
+              }
+            />
+            <div className={style.wrapper}>
+              <Label label="Текст сообщения:" required />
+              <div className={style.wrapperInput}>
+                <textarea
+                  className={style.textarea}
+                  id={NameFil.TEXT}
+                  rows={4}
+                  {...register(NameFil.TEXT, {
+                    required: 'Text is required',
+                  })}
+                />
+              </div>
               {errorMessageText && (
                 <InputErrorMessage errorMessage={errorMessageText} />
               )}
-            </label>
+            </div>
+
             <CustomButton
               type="submit"
               styleBtn="secondary"
               classNameBtn={style.ok}
               textBtn="Отправить"
             />
+            {errorMessageText && (
+              <InputErrorMessage errorMessage={errorMessageText} />
+            )}
             {isPending && <p>Sending your request...</p>}
           </form>
         </Popup>

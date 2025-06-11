@@ -1,141 +1,144 @@
-import { FC, HTMLAttributes, useState } from 'react';
+import * as FileSaver from 'file-saver';
+import { FC, useEffect, useRef, useState } from 'react';
 import Slider, { Settings } from 'react-slick';
 
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
-import { ReactComponent as Cross } from '../../assets/create-profile/cross.svg';
+import { ReactComponent as ArrowLeft } from '../../assets/custom-zoom/arrowLeft.svg';
+import { ReactComponent as ArrowRight } from '../../assets/custom-zoom/arrowRight.svg';
+import { ReactComponent as DownloadIcon } from '../../assets/custom-zoom/download.svg';
+import { ReactComponent as MobileArrowLeft } from '../../assets/custom-zoom/mobileArrowLeft.svg';
+import { ReactComponent as MobileArrowRight } from '../../assets/custom-zoom/mobileArrowRight.svg';
 
 import { FilesList } from '../../types/chat/chat';
 
+import useWindowResize from '../../hooks/useWindowResize';
 import getFileName from '../../utils/getFileNames';
 
+import CrossBtn from '../../ui/cross-button/CrossBtn';
+
 import style from './customZoom.module.scss';
-
-interface PropsArrow extends HTMLAttributes<HTMLDivElement> {}
-
-const SampleNextArrow: FC<PropsArrow> = (props) => {
-  const { style: styleNextArrow, onClick } = props;
-  return (
-    <div
-      className="customArrow"
-      style={{
-        ...styleNextArrow,
-      }}
-      onClick={onClick}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        stroke="black"
-        height="24"
-        viewBox="0 -960 960 960"
-        width="24"
-      >
-        <path d="m242-200 200-280-200-280h98l200 280-200 280h-98Zm238 0 200-280-200-280h98l200 280-200 280h-98Z" />
-      </svg>
-    </div>
-  );
-};
-const SamplePrevArrow: FC<PropsArrow> = (props) => {
-  const { style: stylePrevArrow, onClick } = props;
-  return (
-    <div
-      className="customArrow"
-      style={{
-        ...stylePrevArrow,
-        rotate: '180deg',
-      }}
-      onClick={onClick}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        stroke="black"
-        height="24"
-        viewBox="0 -960 960 960"
-        width="24"
-      >
-        <path d="m242-200 200-280-200-280h98l200 280-200 280h-98Zm238 0 200-280-200-280h98l200 280-200 280h-98Z" />
-      </svg>
-    </div>
-  );
-};
 
 interface PropsSlider {
   image: FilesList[];
   initSlide: number;
 }
+
 const CustomSlider: FC<PropsSlider> = ({ image, initSlide }) => {
   const [currentSlide, setCurrentSlide] = useState(initSlide || 0);
+  const sliderRef = useRef<Slider>(null);
+  const { isMobile } = useWindowResize();
+
   const settings: Settings = {
     initialSlide: initSlide || 0,
     speed: 300,
     slidesToShow: 1,
     slidesToScroll: 1,
     infinite: true,
-    autoplaySpeed: 5000,
-    arrows: image.length > 1,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-    afterChange: (current) => setCurrentSlide(current),
+    arrows: false,
+    afterChange: (current: number) => setCurrentSlide(current),
   };
 
-  const handleDownload = (e: React.MouseEvent, item: FilesList) => {
+  useEffect(() => {
+    setCurrentSlide(initSlide || 0);
+    sliderRef.current?.slickGoTo(initSlide || 0);
+  }, [initSlide]);
+
+  const handleDownload = async (
+    e: React.MouseEvent,
+    item: FilesList
+  ): Promise<void> => {
     e.preventDefault();
-    const link = document.createElement('a');
-    link.href = item.file_url;
-    link.download = item.file;
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      const response = await fetch(item.file_url);
+      if (!response.ok) {
+        throw new Error(`Ошибка загрузки: ${response.statusText}`);
+      }
+      const blob = await response.blob();
+      FileSaver.saveAs(blob, item.file);
+    } catch (error) {
+      console.error('Ошибка при скачивании файла:', error);
+      FileSaver.saveAs(item.file_url, item.file);
+    }
   };
-
   return (
-    <div className={style.sliderContainer}>
-      <Slider {...settings} className="customSlide">
-        {image.map((item) => {
-          return (
-            <div key={item.id}>
-              <div className="img-body">
-                <img
-                  style={{
-                    objectFit: 'contain',
-                  }}
-                  src={item.file_url}
-                  alt={item.file}
-                  height="95%"
-                  width="100%"
-                />
+    <>
+      <div className={style.wrapper}>
+        {!isMobile && image.length > 1 && (
+          <>
+            <div
+              className={style.arrowLeft}
+              onClick={() => sliderRef.current?.slickPrev()}
+            >
+              <ArrowLeft />
+            </div>
+            <div
+              className={style.arrowRight}
+              onClick={() => sliderRef.current?.slickNext()}
+            >
+              <ArrowRight />
+            </div>
+          </>
+        )}
+
+        <div className={style.sliderContainer}>
+          <Slider ref={sliderRef} {...settings} className="customSlide">
+            {image.map((item: { id: any; file_url: any; file: any }) => (
+              <div key={item.id}>
+                <div className="img-body">
+                  <img
+                    style={{ objectFit: 'contain' }}
+                    src={item.file_url}
+                    alt={getFileName(item.file)}
+                    height="95%"
+                    width="100%"
+                  />
+                </div>
+              </div>
+            ))}
+          </Slider>
+          {isMobile && image.length > 1 && (
+            <div className={style.mobileArrows}>
+              <div onClick={() => sliderRef.current?.slickPrev()}>
+                <MobileArrowLeft />
+              </div>
+              <div onClick={() => sliderRef.current?.slickNext()}>
+                <MobileArrowRight />
               </div>
             </div>
-          );
-        })}
-      </Slider>
-      <div className={style.infoBar}>
-        <span>{getFileName(image[currentSlide]?.file)}</span>
-        <span>
-          {currentSlide + 1}/{image.length}
-        </span>
-        <span onClick={(e) => handleDownload(e, image[currentSlide])}>
-          скачать
-        </span>
+          )}
+          <div className={style.infoBar}>
+            <span>
+              {currentSlide + 1}/{image.length}
+            </span>
+            <span>{getFileName(image[currentSlide]?.file)}</span>
+            <span onClick={(e: any) => handleDownload(e, image[currentSlide])}>
+              <DownloadIcon />
+            </span>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
 interface PropsZoom extends PropsSlider {
-  handleToggleZoom: () => void;
+  image: FilesList[];
   initSlide: number;
+  handleToggleZoom: () => void;
 }
 
 const CustomZoom: FC<PropsZoom> = ({ handleToggleZoom, image, initSlide }) => {
   return (
     <>
-      <div className={style.btnClose}>
-        <Cross onClick={handleToggleZoom} className={style.btn_svg} />
+      <div className={style.overlay} />
+      <div className={style.wrapper}>
+        <div className={style.btnClose}>
+          <CrossBtn onClick={handleToggleZoom} />
+        </div>
+        <CustomSlider image={image} initSlide={initSlide} />
       </div>
-      <CustomSlider image={image} initSlide={initSlide} />
     </>
   );
 };

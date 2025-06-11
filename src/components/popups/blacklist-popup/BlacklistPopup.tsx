@@ -5,13 +5,10 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import classNames from 'classnames';
-import { FC, useCallback, useContext, useEffect } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { ReactComponent as Cross } from '../../../assets/create-profile/cross.svg';
 import { QKEY_GET_BLACKLIST } from '../../../constant/querykeyConstants';
-import { ThemeContext } from '../../../providers/ThemeProvider';
 import Popup from '../../../ui/popup/Popup';
 
 import {
@@ -24,6 +21,8 @@ import useNotifyToast from '../../../hooks/useNotifyToast';
 
 import { ContactBlackList } from '../../../types/contact/contact';
 
+import CrossBtn from '../../../ui/cross-button/CrossBtn';
+
 import BlackUserList from './BlackList';
 
 import style from './BlacklistPopup.module.scss';
@@ -35,7 +34,6 @@ interface BlacklistPopupProps {
 
 const BlacklistPopup: FC<BlacklistPopupProps> = ({ isOpen, onClose }) => {
   const queryClient = useQueryClient();
-  const theme = useContext(ThemeContext);
 
   const { ref: refLastUserInBlackList, inView: inViewLastUserInBlackList } =
     useInView({
@@ -170,12 +168,7 @@ const BlacklistPopup: FC<BlacklistPopupProps> = ({ isOpen, onClose }) => {
           onClose={onClose}
           isOpen={isOpen}
         >
-          <Cross
-            className={classNames(style.btn_svg, {
-              [style.lightTheme]: theme?.theme === 'dark',
-            })}
-            onClick={onClose}
-          />
+          <CrossBtn onClick={onClose} />
           <BlackUserList
             isLoading={loadingAllBL}
             blUsers={blUsers}

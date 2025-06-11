@@ -12,11 +12,18 @@ export type ChatContextPayload = {
 };
 
 export enum ThemeEnum {
-  DELL = 'dell',
-  CLEAR = 'clear',
+  DELL = 'DELL',
+  CLEAR = 'CLEAR',
+  QUIT = 'QUIT',
 }
 
-export type PropsDelClearFunc = {
-  type: ThemeEnum | null;
-  selMes: ItemParams<ChatContextPayload> | null;
+export const YesOrNoMessages: Record<ThemeEnum, string> = {
+  [ThemeEnum.DELL]: 'Вы действительно хотите удалить чат?',
+  [ThemeEnum.CLEAR]: 'Вы действительно хотите очистить историю сообщений?',
+  [ThemeEnum.QUIT]: 'Вы действительно хотите выйти из аккаунта?',
 };
+
+export type PropsYesOrNo = {
+  type: ThemeEnum;
+  selMes: ItemParams<ChatContextPayload> | null;
+} | null;

@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
+import { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
 
@@ -12,8 +13,8 @@ import useUserStore from '../store/userStore';
 
 import useChatListStore from '../store/chatListStore';
 
-import { useContext } from 'react';
 import { ThemeContext } from '../providers/ThemeProvider';
+
 import useWindowResize from './useWindowResize';
 
 interface ReturnProps {

@@ -22,6 +22,7 @@ export const CHAT_PAGE_WEB = '';
 // select user chat
 // динамический title
 export const USER_CHAT = ':uid';
+export const DOCTOR_PAGE = ':doctorUid';
 
 // страница с блокировкой пока не is_confirm_doctor = false
 export const VERIFICATION_PAGE = 'verification';

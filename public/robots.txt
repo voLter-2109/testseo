@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /our-doctor/
+Allow: /documents/
+Disallow: /admin
+Disallow: /private
+Disallow: /secret
+Disallow: /dashboard
+Disallow: /*.php$
+Disallow: /*.json$
+Disallow: /*?*
+
+Sitemap: https://online-hospital-react-socket-1.vercel.app/sitemap.xml
+Host: https://online-hospital-react-socket-1.vercel.app/
+Crawl-delay: 2

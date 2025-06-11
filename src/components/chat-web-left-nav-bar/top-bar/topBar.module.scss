@@ -27,46 +27,29 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-  }
 
-  .contextMenu {
-    position: fixed;
-    visibility: visible;
-    top: 168px !important;
-    bottom: unset !important;
-    left: 313px !important;
-    z-index: 1001;
-    overflow: hidden;
-    border-radius: 5px;
-    padding: 4px;
-    background-color: var(--secondary-color);
-    border: 1px solid var(--grey-primary);
-    filter: drop-shadow(2px 4px 6px black);
+    .btn {
+      transition: all 0.3s ease;
 
-    > div > div {
-      padding: 8px;
-      border-radius: 5px;
-      font-size: 0.8rem;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 5px;
-      cursor: pointer;
+      path {
+        stroke: #9f9fac;
+      }
 
-      @media (hover: hover) {
-        &:hover {
-          background-color: var(--brand-blue-secondary);
-        }
+      &:hover {
+        transform: rotate(180deg);
       }
     }
   }
 
-  .contextMenuHide {
-    visibility: hidden;
-    opacity: 0;
-  }
-
   .attachBtn {
     cursor: pointer;
+  }
+}
+
+:root[data-theme='dark'] {
+  .addBtn {
+    path {
+      fill: white;
+    }
   }
 }

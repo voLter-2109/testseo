@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import Cookies from 'js-cookie';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useOutlet } from 'react-router';
 
 import getUserMethods from '../../../api/auth/getUser';
@@ -31,6 +31,10 @@ const ChatPageWeb: FC = () => {
   if (!refresh) return <ToFillOutRegistration />;
 
   if (user && !user.is_filled) return <ToFillOutProfile />;
+
+  useEffect(() => {
+    console.log('qweqweqweqwe ChatPageWeb');
+  });
 
   return (
     <>

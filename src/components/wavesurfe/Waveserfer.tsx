@@ -35,14 +35,14 @@ const WaveserferComponent: FC<Props> = ({
   }, [localFileUrl]);
 
   const chatWaveSerfer = {
-    height: 34,
+    height: 20,
     barWidth: 3,
     barGap: 1,
     barRadius: 10,
   };
 
   const inputWaveSerfer = {
-    height: 70,
+    height: 20,
     barWidth: 5,
     barGap: 1,
     barRadius: 10,
@@ -85,18 +85,27 @@ const WaveserferComponent: FC<Props> = ({
           {isPlaying ? <PauseIconBtn /> : <PlayIconBtn />}
         </div>
       </button>
-      <div
-        className={classNames(style.playerBlock, {
-          [style.recordAudio]: recordAudio,
-        })}
-      >
-        <div ref={sizeBlock} className={style.sizeBlock}>
-          <div ref={wavesurferRef} style={{ width: '100%' }} />
+
+      <div className={style.waveAndTime}>
+        <div
+          className={classNames(style.playerBlock, {
+            [style.recordAudio]: recordAudio,
+          })}
+        >
+          <div ref={sizeBlock} className={style.sizeBlock}>
+            <div
+              ref={wavesurferRef}
+              style={{ width: '100%', height: '100%' }}
+            />
+          </div>
+        </div>
+
+        <div className={style.timeInfo}>
+          <time>{timerFormat(Math.floor(currentTime))}</time>
+          <span> / </span>
+          <time>{timerFormat(Math.floor(durationAudio))}</time>
         </div>
       </div>
-      <time>{timerFormat(Math.floor(currentTime))}</time>
-      <span>{' / '}</span>
-      <time>{timerFormat(Math.floor(durationAudio))}</time>
     </div>
   );
 };

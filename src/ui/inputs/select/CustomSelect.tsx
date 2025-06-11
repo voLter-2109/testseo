@@ -8,10 +8,10 @@ import Label from '../label/Label';
 
 import { IDefaultFormProps } from '../../../components/form/test.type';
 
-import SingleValues from './select.type';
-
 import useYapErrorMessage from '../../../hooks/useYapErrorMessage';
 import InputErrorMessage from '../error-message/InputErrorMessage';
+
+import SingleValues from './select.type';
 
 import './customSelect.scss';
 

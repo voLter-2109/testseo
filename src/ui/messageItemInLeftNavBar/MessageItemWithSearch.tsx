@@ -10,6 +10,7 @@ import { MessageListItem } from '../../types/chat/messageListItem';
 import Avatar from '../../components/avatar/Avatar';
 
 import dateFormatter from '../../utils/chat/dateFormatter';
+
 import style from './messageItemWithSearch.module.scss';
 
 interface Props {

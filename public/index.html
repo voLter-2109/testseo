@@ -12,6 +12,48 @@
       rel="stylesheet"
     />
     <title>Докт24: Госпиталь онлайн</title>
+    <script>
+      window.prerenderReady = false;
+      window.snapReady = false;
+
+      window.addEventListener('load', () => {
+        window.snapReady = true;
+        if (typeof window.prerenderReady !== 'undefined') {
+          window.prerenderReady = true;
+        }
+      });
+    </script>
+
+    <!-- SEO-теги -->
+    <meta name="robots" content="index,follow" />
+    <link
+      rel="canonical"
+      href="https://online-hospital-react-socket-1.vercel.app/"
+    />
+
+    <!-- Динамические ссылки для краулеров -->
+    <link
+      rel="alternate"
+      href="https://online-hospital-react-socket-1.vercel.app/robots.txt"
+      type="text/plain"
+      title="Robots Instructions"
+    />
+
+    <!-- Для страниц врачей -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Наши врачи",
+            "item": "https://online-hospital-react-socket-1.vercel.app/our-doctor/"
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

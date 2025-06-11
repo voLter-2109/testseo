@@ -36,12 +36,12 @@ export const NAVIGATION_LINKS: SideBarItem[] = [
 ];
 
 export const NAVIGATION_LINKS_ALL: SideBarItem[] = [
+  { title: 'Наши врачи', href: OUR_DOCTORS_PAGE, image: setSvg().doctor },
   {
     title: 'Чаты',
     href: CHAT_PAGE,
     image: setSvg().message,
   },
-  { title: 'Наши врачи', href: OUR_DOCTORS_PAGE, image: setSvg().doctor },
   {
     title: 'Юридическая информация',
     href: DOCUMENTS_PAGE_NAVIGATE,
@@ -63,7 +63,7 @@ export const DOCUMENTS_LINKS: SideBarItem[] = [
 ];
 
 export const MOBILE_NAVIGATION_LINKS = [
-  { path: GLOBAL_LAYOUT, icon: messages, label: 'Чаты' },
   { path: OUR_DOCTORS_PAGE, icon: our_doctors, label: 'Наши врачи' },
+  { path: GLOBAL_LAYOUT, icon: messages, label: 'Чаты' },
   { path: SETTINGS_MOBILE_PAGE, icon: settings, label: 'Настройки' },
 ];

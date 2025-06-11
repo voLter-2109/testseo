@@ -1,40 +1,103 @@
 import classNames from 'classnames';
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useEffect, useRef, useState } from 'react';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 import Popup from '../../../ui/popup/Popup';
-import { ThemeContext } from '../../../providers/ThemeProvider';
 
-import { ReactComponent as Cross } from '../../../assets/create-profile/cross.svg';
-import CustomButton from '../../../ui/custom-button/Button';
+import ChannelUsers from '../../registration/channel-block/ChannelUsers';
+
+import { CreateChannelForm } from '../../../types/channel/createForm';
+import {
+  ObjectCreateChannel,
+  TChannels,
+} from '../../../types/websoket/websoket.types';
+import CrossBtn from '../../../ui/cross-button/CrossBtn';
+import ChannelInfo from '../../registration/channel-block/ChannelInfo';
+
+import { WebSocketContext } from '../../../providers/Websoket';
+
+import convertToBase64Async from '../../../utils/chat/convertToBase64Async';
 
 import style from './CreateChannelPopup.module.scss';
 
 interface CreateChannelPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  handleAddChannel: (channelName: string, channelType: string) => void;
+  type: TChannels.PUBLIC_GROUP | TChannels.PUBLIC_CHANNEL;
 }
 
 const CreateChannelPopup: FC<CreateChannelPopupProps> = ({
   isOpen,
   onClose,
-  handleAddChannel,
+  type,
 }) => {
-  const theme = useContext(ThemeContext);
+  // ref и trigger для CSSTransition
+  const nodeRef = useRef<any>(null);
+  const [trigger, setTrigger] = useState(true);
+  const [defForm, setDefForm] = useState<CreateChannelForm>({
+    name: '',
+    desc: '',
+    avatar: null,
+    typeChat: type,
+    privateChanel: false,
+    newAvatarUrl: '',
+  });
 
-  const [channelName, setChannelName] = useState('');
-  const [channelType, setChannelType] = useState('public');
+  const contextSocket = useContext(WebSocketContext);
 
-  const changeType = (e: any) => {
-    setChannelType(e.target.value);
+  const { createChannel } = contextSocket ?? {};
+
+  const handleChangeDataForm = (d: CreateChannelForm) => {
+    setDefForm(d);
   };
 
-  const handleCreateChannel = async () => {
-    try {
-      await handleAddChannel(channelName, channelType);
-    } finally {
+  useEffect(() => {
+    console.log(defForm);
+  }, [defForm]);
+
+  const toggleTrigger = () => {
+    setTrigger((prev) => !prev);
+  };
+
+  // тут будет функция от сокета для создания группы
+  const handleCreateChannel = async (selectChat: string[]) => {
+    const { avatar, desc, name, privateChanel, typeChat } = defForm;
+
+    const t = privateChanel ? typeChat.replace('public', 'private') : typeChat;
+    if (createChannel) {
+      let newAvatar: {
+        filename: string;
+        data: string;
+      } | null = null;
+
+      try {
+        if (avatar && avatar[0]) {
+          const base64Audio = await convertToBase64Async(avatar[0]);
+          newAvatar = {
+            data: base64Audio,
+            filename: avatar[0].name,
+          };
+        } else {
+          newAvatar = null;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
+      const newChannel: ObjectCreateChannel = {
+        avatar: newAvatar,
+        description: desc,
+        name,
+        type: t as TChannels,
+        uid_users_list: selectChat,
+      };
+
+      // тут функция от сокета, обьект подходит по типу с пропсам функции
+      createChannel(newChannel, avatar);
       onClose();
     }
+
+    return null;
   };
 
   return (
@@ -45,51 +108,40 @@ const CreateChannelPopup: FC<CreateChannelPopupProps> = ({
           onClose={onClose}
           isOpen={isOpen}
         >
-          <Cross
-            className={classNames(style.btn_svg, {
-              [style.lightTheme]: theme?.theme === 'dark',
-            })}
-            onClick={onClose}
-          />
-
-          <div className={style.createWrapper}>
-            <h2>Введите название канала</h2>
-            <input
-              type="text"
-              name="channelName"
-              value={channelName}
-              onChange={(e) => setChannelName(e.target.value)}
-            />
-            <div className={style.typeControl}>
-              <p>
-                <input
-                  className={style.control}
-                  type="radio"
-                  name="channelType"
-                  value="public"
-                  onChange={changeType}
-                  defaultChecked
-                />
-                Публичный канал
-              </p>
-
-              <p>
-                <input
-                  className={style.control}
-                  type="radio"
-                  name="channelType"
-                  value="private"
-                  onChange={changeType}
-                />
-                Частный канал
-              </p>
-            </div>
-            <CustomButton
-              textBtn="Создать канал"
-              styleBtn="primary"
-              onClick={handleCreateChannel}
-            />
-          </div>
+          <CrossBtn onClick={onClose} />
+          <h1 className={style.header}>
+            Создание {type.includes('group') ? <>группы</> : <>канала</>}
+          </h1>
+          <SwitchTransition mode="out-in">
+            <CSSTransition
+              nodeRef={nodeRef}
+              addEndListener={(done: () => void) => {
+                nodeRef.current?.addEventListener('transitionend', done, false);
+              }}
+              classNames="fade"
+              style={{ height: '85%' }}
+              key={trigger ? 'info' : 'users'}
+            >
+              <div
+                ref={nodeRef}
+                className={classNames(style.createChannelBlock)}
+              >
+                {trigger ? (
+                  <ChannelInfo
+                    setTrigger={toggleTrigger}
+                    onClose={onClose}
+                    defForm={defForm}
+                    handleChangeDataForm={handleChangeDataForm}
+                  />
+                ) : (
+                  <ChannelUsers
+                    setTrigger={toggleTrigger}
+                    createChannel={handleCreateChannel}
+                  />
+                )}
+              </div>
+            </CSSTransition>
+          </SwitchTransition>
         </Popup>
       )}
     </>

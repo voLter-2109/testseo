@@ -2,10 +2,7 @@ import { useState } from 'react';
 
 import useUserStore from '../../store/userStore';
 
-import {
-  CREATE_PROFILE_PAGE,
-  REGISTRATION_PAGE,
-} from '../../constant/url-page.constants';
+import { CREATE_PROFILE_PAGE } from '../../constant/url-page.constants';
 
 import Divider from '../../ui/divider/Divider';
 import ExitButton from '../../ui/exit-button/ExitButton';
@@ -100,9 +97,7 @@ const ChatPageSideBar = () => {
             </li>
             <Divider />
             <li>
-              <LinkMobileCheck to={REGISTRATION_PAGE}>
-                <ExitButton />
-              </LinkMobileCheck>
+              <ExitButton />
             </li>
           </ul>
         </div>

@@ -19,7 +19,7 @@ const ZoomWrapperImage: FC<PropsWithChildren<PropsWrapperImage>> = ({
   initSlide,
 }) => {
   return (
-    <>
+    <div>
       {children}
       {isOpen && (
         <Popup isOpen={isOpen} onClose={onClose}>
@@ -30,7 +30,7 @@ const ZoomWrapperImage: FC<PropsWithChildren<PropsWrapperImage>> = ({
           />
         </Popup>
       )}
-    </>
+    </div>
   );
 };
 

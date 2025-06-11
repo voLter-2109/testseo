@@ -59,6 +59,7 @@ import CustomButton from '../../ui/custom-button/Button';
 import InputCheckbox from '../../ui/inputs/input-checkbox/InputCheckbox';
 
 import InputEmail from '../../ui/inputs/input-email/InputEmail';
+
 import style from './createProfile.module.scss';
 
 const defaultValueForm: IDefaultFormProps = {

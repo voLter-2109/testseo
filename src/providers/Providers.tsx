@@ -5,6 +5,10 @@ import Favicon from 'react-favicon';
 
 import CookieConsent from '../components/cookie-consent/CookieConsent';
 
+import ChatMenu from '../components/menu/ChatMenu/ChatMenu';
+
+import MessageMenu from '../components/menu/MessageMenu/MessageMenu';
+
 import AuthNavigateProvider from './AuthNavigateProvider';
 import ThemeProvider from './ThemeProvider';
 import WebSocketComponent from './Websoket';
@@ -37,6 +41,8 @@ const Providers: FC<PropsWithChildren> = ({ children }) => {
           <AuthNavigateProvider>
             <WebSocketComponent>
               <Favicon url="img/favicon.ico" />
+              <ChatMenu />
+              <MessageMenu />
               {children}
               <CookieConsent />
             </WebSocketComponent>

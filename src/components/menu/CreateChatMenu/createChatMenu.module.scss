@@ -1,0 +1,31 @@
+.contextMenu {
+  position: fixed;
+  visibility: visible;
+  top: 168px !important;
+  bottom: unset !important;
+  left: 313px !important;
+  z-index: 1001;
+  overflow: hidden;
+  border-radius: 5px;
+  padding: 4px;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--grey-primary);
+  filter: drop-shadow(2px 4px 6px black);
+
+  > div > div {
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--brand-blue-secondary);
+      }
+    }
+  }
+}

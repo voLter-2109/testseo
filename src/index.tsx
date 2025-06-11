@@ -1,25 +1,36 @@
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './app';
 
-import Providers from './providers/Providers';
-
 import 'react-loading-skeleton/dist/skeleton.css';
 
 import './index.css';
 import './index.root.css';
+import Providers from './providers/Providers';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const rootElement = document.getElementById('root') as HTMLElement;
 
-root.render(
-  // <React.StrictMode>
-  <BrowserRouter>
-    <Providers>
+if (rootElement && rootElement.hasChildNodes()) {
+  console.log('hydrateRoot');
+  // Режим гидратации для статических страниц
+  ReactDOM.hydrateRoot(
+    rootElement,
+    <StrictMode>
       <App />
-    </Providers>
-  </BrowserRouter>
-  // </React.StrictMode>
-);
+    </StrictMode>
+  );
+} else {
+  console.log('render');
+  // Клиентский рендеринг для новых страниц
+  ReactDOM.createRoot(rootElement).render(
+    // <React.StrictMode>
+    <BrowserRouter>
+      <Providers>
+        <App />
+      </Providers>
+    </BrowserRouter>
+    // </React.StrictMode>
+  );
+}

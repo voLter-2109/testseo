@@ -24,19 +24,24 @@ import useNetwork from '../hooks/getNetworkConnection';
 import usePlaySound from '../hooks/soundNotification';
 import useChatListStore from '../store/chatListStore';
 import useUserStore from '../store/userStore';
-import { LastMessage } from '../types/chat/chat';
+import { ChatsListItem, LastMessage } from '../types/chat/chat';
 import { MessageListItem, MessagesList } from '../types/chat/messageListItem';
 import {
   CHANGE_STATUS_READ_MESSAGE,
   ChangeStatusMessage,
+  CREATE_CHAT,
   CREATE_TEXT_MESSAGE,
+  CreateChannelPayload,
+  CreateChannelResponse,
   DELETE_MESSAGE,
   DeleteMessageWS,
   ForLoadingMessageList,
   MessageWithSocket,
   NEW_STATUS_USER,
   NEW_STATUS_USER_ALL,
+  ObjectCreateChannel,
   RequestChangeStatusMEssage,
+  RequestCreateChannelGroup,
   RequestCreateSendMessage,
   RequestDeleteMessagesREf,
   RequestDeleteMEssageWS,
@@ -44,6 +49,7 @@ import {
   RequestObjectOnlineStatus,
   RequestUpdateMessage,
   SendMessage,
+  TChannels,
   THandleSendMessage,
   UPDATE_MESSAGE,
   UpdateMessage,
@@ -70,6 +76,8 @@ const WebSocketComponent: FC<PropsWithChildren> = ({ children }) => {
   const requestCreateSendMessage = useRef<RequestCreateSendMessage>({});
   // тут записываются ключи  удаленных сообщений в качестве ключей requestId
   const requestDeleteMessages = useRef<RequestDeleteMessagesREf>({});
+  // тут записываются ключи для создания групп или каналов
+  const requestCreateGroupChannel = useRef<RequestCreateChannelGroup>({});
 
   // берем методы store chatList для изменения статусов online  и последнего сообщения в чате
   const {
@@ -616,28 +624,85 @@ const WebSocketComponent: FC<PropsWithChildren> = ({ children }) => {
   };
 
   const checkOnlineStatus = () => {
-    console.log(
-      socketRef.current &&
-        socketRef.current.readyState === WebSocket.OPEN &&
-        status
-    );
     if (
       socketRef.current &&
       socketRef.current.readyState === WebSocket.OPEN &&
       status
     ) {
       try {
-        console.log('weafdsf');
         socketRef.current?.send(
           JSON.stringify({
             action: 'get_status_list_chat',
-            request_uid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+            request_uid: uuidv4(),
           })
         );
       } catch (error: any) {
         notifyError(error.message);
       }
     }
+  };
+
+  const handlingCreateChannels = (req: CreateChannelResponse) => {
+    const {
+      request_uid,
+      message: { chat_key, type },
+    } = req;
+
+    const uidFromKey = chat_key.split('_')[1];
+
+    if (request_uid && requestCreateGroupChannel.current[request_uid]) {
+      const {
+        handleAvatar,
+        message: { name },
+      } = requestCreateGroupChannel.current[request_uid];
+
+      const objectUrl = handleAvatar
+        ? URL.createObjectURL(handleAvatar[0])
+        : null;
+
+      const formattedChat: ChatsListItem = {
+        chat: {
+          uid: uidFromKey,
+          username: '',
+          nickname: '',
+          first_name: '',
+          last_name: '',
+          avatar: objectUrl ? 'avatar' : null,
+          avatar_url: objectUrl || null,
+          avatar_webp: null,
+          avatar_webp_url: null,
+          is_filled: true,
+          additional_information: '',
+          birthday: 0,
+          is_blocked: false,
+          is_online: false,
+          patronymic: '',
+          specialization: null,
+          was_online_at: 0,
+        },
+        chat_key,
+        id: 0,
+        type,
+        name,
+        index: 0,
+        is_active: true,
+        is_favorite: false,
+        file_count: 0,
+        message_count: 0,
+        new_message_count: 0,
+        new_file_count: 0,
+        last_message: null,
+        last_seen_message: null,
+        first_new_message: null,
+      };
+
+      setStoreChatList([formattedChat]);
+
+      delete requestCreateSendMessage.current[request_uid];
+    }
+
+    // у того кого добавили request_uid в useRef не будет, значит ней всей информации
+    // ждем нововведений от бека
   };
 
   // подключение сокетов
@@ -751,7 +816,19 @@ const WebSocketComponent: FC<PropsWithChildren> = ({ children }) => {
           return notifyError(request.error);
         }
 
-        // Сообщения из чата -  action create_text_message , status ok
+        // ответ сокета при создании чата
+        if (
+          Object.prototype.hasOwnProperty.call(request, 'action') &&
+          request.action === CREATE_CHAT &&
+          Object.prototype.hasOwnProperty.call(request, 'status') &&
+          request.status === 'OK'
+        ) {
+          return handlingCreateChannels(
+            request as any as CreateChannelResponse
+          );
+        }
+
+        // ответ от сокета входящее сообщение
         if (
           Object.prototype.hasOwnProperty.call(request, 'action') &&
           request.action === CREATE_TEXT_MESSAGE &&
@@ -798,6 +875,7 @@ const WebSocketComponent: FC<PropsWithChildren> = ({ children }) => {
           );
         }
 
+        // редактирование уже имеющегося сообщения
         if (
           Object.prototype.hasOwnProperty.call(request, 'action') &&
           request.action === UPDATE_MESSAGE &&
@@ -818,11 +896,14 @@ const WebSocketComponent: FC<PropsWithChildren> = ({ children }) => {
 
   // * функция для отправки сообщения через сокеты
   const handleCreateTextMessage = ({
+    type,
+    chatKey,
     toUserUid,
     content,
     resetValue,
   }: THandleSendMessage): void => {
     const requestId = uuidv4();
+    const isChat = type === TChannels.CHAT;
     const {
       fileBlob,
       textContent,
@@ -831,15 +912,27 @@ const WebSocketComponent: FC<PropsWithChildren> = ({ children }) => {
       forwardedMessages: forward,
     } = content;
 
+    console.log(
+      'toUserUid:',
+      toUserUid,
+      'chatKey:',
+      chatKey,
+      'isChat:',
+      isChat
+    );
+
     // создает object for action
-    const sendMes = {
-      to_user_uid: toUserUid,
+    const baseMessage = {
       content: textContent,
       files: fileBlob,
       status: 'publish',
       replied_messages: repliedMEssage.map((item) => item.id),
       forwarded_messages: forward.map((item) => item.id),
     };
+
+    const sendMes = isChat
+      ? { ...baseMessage, to_user_uid: toUserUid }
+      : { ...baseMessage, chat_key: chatKey };
 
     if (
       socketRef.current &&
@@ -849,6 +942,7 @@ const WebSocketComponent: FC<PropsWithChildren> = ({ children }) => {
       // формируем сообщение
       const sendMessage: SendMessage = {
         action: CREATE_TEXT_MESSAGE,
+        // @ts-ignore
         object: sendMes,
         request_uid: requestId,
       };
@@ -974,7 +1068,7 @@ const WebSocketComponent: FC<PropsWithChildren> = ({ children }) => {
   };
 
   useEffect(() => {
-    checkOnlineStatus();
+    // checkOnlineStatus();
 
     if (
       socketRef.current &&
@@ -983,6 +1077,7 @@ const WebSocketComponent: FC<PropsWithChildren> = ({ children }) => {
     ) {
       // запрос статусов
       timeIntervalRefForStatus.current = setInterval(() => {
+        console.log(1);
         checkOnlineStatus();
       }, 300000);
     }
@@ -1070,6 +1165,31 @@ const WebSocketComponent: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+  // * функция для создания группы или канала
+  const createChannel = (d: ObjectCreateChannel, avatarFile: File[] | null) => {
+    if (!socketRef.current || socketRef.current.readyState !== WebSocket.OPEN) {
+      console.error('WebSocket не подключён');
+      return;
+    }
+
+    const requestId = uuidv4();
+    const message: CreateChannelPayload = {
+      action: CREATE_CHAT,
+      request_uid: requestId,
+      object: d,
+    };
+
+    socketRef.current.send(JSON.stringify(message));
+
+    requestCreateGroupChannel.current = {
+      [requestId]: {
+        message: d,
+        request_uid: requestId,
+        handleAvatar: avatarFile,
+      },
+    };
+  };
+
   const useMemoValue = useMemo(
     (): WebSocketProps => ({
       status,
@@ -1079,6 +1199,7 @@ const WebSocketComponent: FC<PropsWithChildren> = ({ children }) => {
       handleCheckStatusOnlineUser,
       handleChangeStatusReadMessage,
       handleEditMessage,
+      createChannel,
     }),
     [status]
   );

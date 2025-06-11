@@ -64,6 +64,9 @@ import { MessageListItem } from '../../../types/chat/messageListItem';
 
 import useWindowResize from '../../../hooks/useWindowResize';
 
+import useChatListStore from '../../../store/chatListStore';
+import { TChannels } from '../../../types/websoket/websoket.types';
+
 import style from './bottomBar.module.scss';
 
 interface Props {
@@ -72,9 +75,33 @@ interface Props {
   selectedMes: MessageListItem[];
   toggleForwardPopup: () => void;
   selectRepliedMes: MessageListItem | null;
-  uid: string | null;
+  uid: string;
 }
 
+// drag-and-drop
+function useWindowDragAndDrop(onFilesDropped: (files: FileList) => void) {
+  useEffect(() => {
+    const handleDragOver = (e: DragEvent) => {
+      e.preventDefault();
+    };
+
+    const handleDrop = (e: DragEvent) => {
+      e.preventDefault();
+      if (e.dataTransfer?.files && e.dataTransfer.files.length > 0) {
+        onFilesDropped(e.dataTransfer.files);
+        e.dataTransfer.clearData();
+      }
+    };
+
+    window.addEventListener('dragover', handleDragOver);
+    window.addEventListener('drop', handleDrop);
+
+    return () => {
+      window.removeEventListener('dragover', handleDragOver);
+      window.removeEventListener('drop', handleDrop);
+    };
+  }, [onFilesDropped]);
+}
 const BottomBar: FC<Props> = ({
   uid,
   blockChat,
@@ -104,6 +131,22 @@ const BottomBar: FC<Props> = ({
 
   const { mobileL } = useWindowResize();
 
+  // если да, то делаем запрос на получение информации о враче
+  const getChatByUid = useChatListStore((state) => state.getChatByUid);
+  const chatItem = getChatByUid(uid);
+
+  const chatType = useMemo(() => {
+    if (chatItem) return chatItem.type;
+
+    return TChannels.CHAT;
+  }, [chatItem]);
+
+  const chatKey = useMemo(() => {
+    if (chatItem) return chatItem.chat_key;
+
+    return '';
+  }, [chatItem]);
+
   const contextSocket = useContext(WebSocketContext);
 
   const { handleCreateTextMessage } = contextSocket ?? {};
@@ -113,7 +156,7 @@ const BottomBar: FC<Props> = ({
       duration: 2000,
     });
 
-  const { canIUseMicrophone, openModal, closeMicrophonePopup } =
+  const { canIUseMicrophone, openModal, closeMicrophonePopup, errorType } =
     useMicrophoneCheck();
 
   const { startRecording, stopRecording } = useRecording(
@@ -154,7 +197,7 @@ const BottomBar: FC<Props> = ({
       classNames(style.quillMenu, {
         [style.quillMenu_active]: isQuillMenuShowing,
       }),
-    []
+    [isQuillMenuShowing]
   );
 
   const toggleAttachmentsContextMenu = useCallback(
@@ -250,6 +293,15 @@ const BottomBar: FC<Props> = ({
     return setIsAttachmentPopupOpen(true);
   };
 
+  useWindowDragAndDrop((files) => {
+    // Создаём фейковое событие для использования уже существующей логики
+    const fakeEvent = {
+      target: { files },
+    } as unknown as ChangeEvent<HTMLInputElement>;
+
+    handleFileChange(fakeEvent);
+  });
+
   const hideContextMenu = () => {
     setAttachmentsContextMenuOpen(false);
   };
@@ -282,6 +334,8 @@ const BottomBar: FC<Props> = ({
         const trimmedMessage = trimMessage(message);
         if (handleCreateTextMessage)
           handleCreateTextMessage({
+            type: chatType,
+            chatKey,
             toUserUid: uid,
             content: {
               textContent: trimmedMessage,
@@ -306,6 +360,8 @@ const BottomBar: FC<Props> = ({
       if (audioFile && handleCreateTextMessage) {
         const base64Audio = await convertToBase64Async(audioFile);
         handleCreateTextMessage({
+          type: chatType,
+          chatKey,
           toUserUid: uid,
           content: {
             textContent: '<p></p>',
@@ -534,6 +590,8 @@ const BottomBar: FC<Props> = ({
                     />
                     {filesToPreview && (
                       <AttachmentPopup
+                        chatKey={chatKey}
+                        chatType={chatType}
                         selectRepliedMes={selectRepliedMes}
                         files={filesToPreview}
                         resetSelectMes={resetSelectMes}
@@ -639,6 +697,7 @@ const BottomBar: FC<Props> = ({
         <MicrophonePopup
           openModal={openModal}
           closeMicrophonePopup={closeMicrophonePopup}
+          errorType={errorType}
         />
       )}
     </div>

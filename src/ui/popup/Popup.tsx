@@ -44,7 +44,9 @@ const Popup: FC<PopupProps> = ({ isOpen, onClose, children, extraClass }) => {
       >
         <div
           className={classNames(style.content, extraClass)}
-          onClick={(event) => event.stopPropagation()}
+          onClick={(event) => {
+            event.stopPropagation();
+          }}
         >
           {children}
         </div>

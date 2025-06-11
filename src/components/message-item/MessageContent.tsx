@@ -29,7 +29,6 @@ const MessageContent: FC<Props> = ({
     }
 
     if (ALLOWED_IMAGE_TYPE_FORMAT.includes(fileList[0].file_type || '')) {
-      console.log(fileList);
       return <ImageMessage fileList={fileList} content={content} />;
     }
 

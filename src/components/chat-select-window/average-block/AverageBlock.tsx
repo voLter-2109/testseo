@@ -30,7 +30,8 @@ import formatDate from '../../../utils/formatDate';
 import getMessageDate from '../../../utils/chat/getMessageDate';
 
 import { ReactComponent as FrowardSvg } from '../../../assets/bottom-bar/forward.svg';
-import { ReactComponent as Cross } from '../../../assets/create-profile/cross.svg';
+
+import CrossBtn from '../../../ui/cross-button/CrossBtn';
 
 import style from './averageBlock.module.scss';
 
@@ -195,18 +196,6 @@ const AverageBlock: FC<PropsRowVirtualizerDynamic> = ({
 }) => {
   const parentRef = useRef<HTMLDivElement | null>(null);
   const queryClient = useQueryClient();
-  // const [clickUidRepliedMes, setClickUidRepliedMes] = useState<string | null>(
-  //   null
-  // );
-
-  // const handleSetClickRepliedMes = (uid: string) => {
-  //   setClickUidRepliedMes(uid);
-  // };
-
-  // const resetClickRepliedMes = () => {
-  //   setClickUidRepliedMes(null);
-  // };
-
   const toggleViewBlacklistPopUp = () => {
     handleOpeBlackList();
   };
@@ -702,12 +691,7 @@ const AverageBlock: FC<PropsRowVirtualizerDynamic> = ({
               </span>
               <Interweave content={selectRepliedMes.content} />
             </div>
-            <Cross
-              width={35}
-              height={35}
-              className={style.clearRep}
-              onClick={resetSelectRepliedMes}
-            />
+            <CrossBtn onClick={resetSelectRepliedMes} />
           </div>
         )}
         {blockChat && (

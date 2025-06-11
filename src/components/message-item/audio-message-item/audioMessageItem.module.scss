@@ -1,13 +1,24 @@
 .audioWrapper {
+  width: 20vw;
+  width: 373px;
   display: flex;
   flex-direction: column;
-  // width: 100%;
-  audio {
-    height: 40px;
-    max-width: 350px;
-    track {
-      height: 100%;
-      width: 100%;
-    }
+}
+
+.audioWrapper > div:first-child {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.loader {
+  height: 88.9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 380px) {
+  .audioWrapper {
+    width: 320px;
   }
 }

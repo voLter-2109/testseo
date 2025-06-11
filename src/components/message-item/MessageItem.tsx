@@ -168,13 +168,25 @@ const MessageItem: FC<MessageItemProps> = ({
   return (
     <div ref={refStatusMessage} id={message.uid}>
       <div
-        className={classNames(style.message_wrapper, {
+        className={classNames('message_wrapper', style.message_wrapper, {
           [style.scrollTo]: viewRepliedMes,
         })}
-        onContextMenu={(event) => {
-          if (!selectMode) {
-            displayMenu(event, message);
+        onContextMenu={(e) => {
+          const hasMessageWrapper = Boolean(
+            // @ts-ignore
+            e.target.closest('.message_wrapper')
+          );
+          // @ts-ignore
+          if (e.target.nodeName === 'IMG') {
+            return undefined;
           }
+
+          // @ts-ignore
+          if (!selectMode && hasMessageWrapper) {
+            return displayMenu(e, message);
+          }
+
+          return undefined;
         }}
         onClick={handleMessageClick}
       >

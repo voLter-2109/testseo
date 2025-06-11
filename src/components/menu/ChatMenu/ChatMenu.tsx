@@ -37,11 +37,11 @@ import ToggleBlockMenuItemBuilder from '../ToggleBlockMenuItemBuilder/ToggleBloc
 
 import {
   ChatContextPayload,
-  PropsDelClearFunc,
+  PropsYesOrNo,
   ThemeEnum,
 } from '../../../types/menu/menu';
 
-import ClearOrDelModal from '../../popups/dell-or-clear-chat/ClearOrDelModal';
+import YesOrNoModal from '../../popups/yes-or-no-popup/YesOrNoModal';
 
 import style from './chatMenu.module.scss';
 
@@ -51,10 +51,7 @@ const ChatMenu = () => {
   const [notificationsAreMuted, setNotificationsAreMuted] = useState(false);
   const [openModalBL, setOpenModalBL] = useState(false);
   const [openModalClearOrDel, setOpenModalClearOrDel] =
-    useState<PropsDelClearFunc>({
-      type: null,
-      selMes: null,
-    });
+    useState<PropsYesOrNo>(null);
   const [openBLWarnModal, setOpenBLWarnModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<{
     uid: string;
@@ -227,23 +224,20 @@ const ChatMenu = () => {
   };
 
   const handleCloseModalClearOrDel = () => {
-    setOpenModalClearOrDel({
-      type: null,
-      selMes: null,
-    });
+    setOpenModalClearOrDel(null);
   };
 
-  const handleOpenModalClearOrDel = (e: PropsDelClearFunc) => {
+  const handleOpenModalClearOrDel = (e: PropsYesOrNo) => {
     useContextMenu().hideAll();
     setOpenModalClearOrDel(e);
   };
 
-  const handleFunc = (e: PropsDelClearFunc) => {
-    if (e.type === ThemeEnum.DELL && e.selMes) {
+  const handleFunc = (e: PropsYesOrNo) => {
+    if (e && e.type === ThemeEnum.DELL && e.selMes) {
       handleDeleteChat(e.selMes);
     }
 
-    if (e.type === ThemeEnum.CLEAR && e.selMes) {
+    if (e && e.type === ThemeEnum.CLEAR && e.selMes) {
       handleClearChat(e.selMes);
     }
   };
@@ -322,8 +316,8 @@ const ChatMenu = () => {
         />
       )}
 
-      {openModalClearOrDel.type && (
-        <ClearOrDelModal
+      {openModalClearOrDel && (
+        <YesOrNoModal
           handleFunc={handleFunc}
           onClose={handleCloseModalClearOrDel}
           isOpen={openModalClearOrDel}

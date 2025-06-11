@@ -57,7 +57,6 @@ const Input: FC<InputProps> = ({
   extraBeforeChunkClassName,
   ...HTMLInputElement
 }) => {
-  console.log('перерисовка Input');
   return (
     <div className={style.wrapper}>
       {labelText && (

@@ -4,7 +4,6 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
@@ -13,13 +12,10 @@ import { useShallow } from 'zustand/react/shallow';
 
 import { getDoctorsByUid } from '../../api/doctor/doctors';
 import {
-  GET_USER_BY_UID,
   QKEY_GET_DOCTOR_BY_UID,
   QKEY_GET_TEXT_MESSAGE,
   QKEY_GET_TEXT_MESSAGE_WITH_SEARCH,
 } from '../../constant/querykeyConstants';
-
-import { ReactComponent as Cross } from '../../assets/create-profile/cross.svg';
 
 import useChatListStore from '../../store/chatListStore';
 
@@ -27,8 +23,6 @@ import Popup from '../../ui/popup/Popup';
 import Forward from '../../ui/re-send-item-user/Forward';
 
 import { MessageListItem } from '../../types/chat/messageListItem';
-
-import { ContactShortUserInfo } from '../../types/contact/contact';
 
 import OutletLoading from '../../ui/suspense-loading/OutletLoading';
 
@@ -43,14 +37,17 @@ import useUserStore from '../../store/userStore';
 
 import SearchMessageItem from '../message-item/seach-message-item/SearchMessageItem';
 
+import { TChannels } from '../../types/websoket/websoket.types';
+
+import CrossBtn from '../../ui/cross-button/CrossBtn';
+
 import AverageBlock from './average-block/AverageBlock';
 import BottomBar from './bottom-bar/BottomBar';
 import InformationBlock from './informationBlock.tsx/InformationBlock';
 import TopBarChat from './top-bar/TopBarChat';
 
-import EditMessagePopup from './edit-message-popup/EditMessagePopup';
-
 import style from './chatWindow.module.scss';
+import EditMessagePopup from './edit-message-popup/EditMessagePopup';
 
 interface Props {
   uid: string | null;
@@ -98,10 +95,20 @@ const ChatWindow: FC<Props> = ({ uid }) => {
   // ! получить данные собеседника, проверить врач ли он (работает не всегда)
   // если да, то делаем запрос на получение информации о враче
   const getChatByUid = useChatListStore((state) => state.getChatByUid);
-  // если чата в памяти нет, то в других компонентах делает запрос на получение его контактов
-  const checkContactByUid = queryClient.getQueryData<
-    AxiosResponse<ContactShortUserInfo>
-  >([GET_USER_BY_UID, uid]);
+
+  // сейчас мы делам запрос на контакт в каждом чате, а там есть отметка доктор он или нет
+  const checkIsDoctor = useChatListStore((state) => {
+    if (uid && state.userList[uid]) {
+      return state.userList[uid].is_doctor;
+    }
+
+    return false;
+  });
+
+  // // если чата в памяти нет, то в других компонентах делает запрос на получение его контактов
+  // const checkContactByUid = queryClient.getQueryData<
+  //   AxiosResponse<ContactShortUserInfo>
+  // >([GET_USER_BY_UID, uid]);
 
   // проверка что чат не заблокирован с нашей стороны
   const blockChat = useChatListStore((state) => {
@@ -208,12 +215,14 @@ const ChatWindow: FC<Props> = ({ uid }) => {
   // переменная которая работает как триггер для useQuery при загрузке данных врача
   const enableDoctorQuery = useMemo(() => {
     const t =
-      (uid && Boolean(getChatByUid(uid)?.chat.specialization?.length !== 0)) ||
-      checkContactByUid?.data.is_doctor ||
+      (uid &&
+        Boolean(getChatByUid(uid)?.type === TChannels.CHAT) &&
+        Boolean(getChatByUid(uid)?.chat.specialization?.length !== 0) &&
+        checkIsDoctor) ||
       false;
 
     return t;
-  }, [checkContactByUid?.data.is_doctor]);
+  }, [checkIsDoctor && uid]);
 
   // функция для поиска сообщений при поиске
   const fetchTextMessage = useCallback(
@@ -226,6 +235,11 @@ const ChatWindow: FC<Props> = ({ uid }) => {
       });
     },
     [getTextMessagesList]
+  );
+
+  useEffect(
+    () => console.log('enableDoctorQuery', enableDoctorQuery),
+    [enableDoctorQuery]
   );
 
   // *_______________useQuery__________________
@@ -543,7 +557,7 @@ const ChatWindow: FC<Props> = ({ uid }) => {
           <div className={classNames(style.chatWindow)} id="chatWindow">
             <TopBarChat
               uid={uid}
-              isDoctor={!!doctorDataByUid}
+              isDoctor={checkIsDoctor}
               valueInputSearch={searchValue}
               resetSearchParams={resetSearchParams}
               selectedMes={selectedMessagesForward}
@@ -677,7 +691,7 @@ const ChatWindow: FC<Props> = ({ uid }) => {
           onClose={handleCloseForwardPopup}
           extraClass={style.attachmentPopup}
         >
-          <Cross onClick={handleCloseForwardPopup} className={style.btn_svg} />
+          <CrossBtn onClick={handleCloseForwardPopup} />
           <Forward
             toggleForwardPopup={handleCloseForwardPopup}
             resetSelectMesForward={resetSelectMes}

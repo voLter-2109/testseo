@@ -5,7 +5,6 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   CHAT_PAGE,
   REGISTRATION_PAGE,
-  VERIFICATION_PAGE,
 } from '../../constant/url-page.constants';
 
 import {
@@ -16,12 +15,12 @@ import useWindowResize from '../../hooks/useWindowResize';
 import useUserStore from '../../store/userStore';
 import Burger from '../../ui/burger/Burger';
 import CustomButton from '../../ui/custom-button/Button';
-import ExitButton from '../../ui/exit-button/ExitButton';
 import Logo from '../../ui/logo/Logo';
 import NavigationWrapper from '../navigation-wrapper/NavigationWrapper';
 
 import style from './header.module.scss';
 
+const NAVIGATION_RIGHT_MARGIN = 10;
 function Header() {
   console.log('перерисовка header идет 3 частью');
 
@@ -42,15 +41,15 @@ function Header() {
         </Link>
       </div>
 
-      <div className={style.navigate}>
+      <div
+        className={style.navigate}
+        style={{ marginRight: user ? NAVIGATION_RIGHT_MARGIN : 0 }}
+      >
         {!tableMin && (
           <NavigationWrapper
             wrapperStyle="wrapperRow"
             links={user ? NAVIGATION_LINKS_ALL : NAVIGATION_LINKS}
           />
-        )}
-        {pathname === `/${VERIFICATION_PAGE}` && tableMin && (
-          <ExitButton showText classNameBtn={style.btn} />
         )}
       </div>
       {!user && !pathname.includes(REGISTRATION_PAGE) && (
@@ -73,15 +72,6 @@ function Header() {
       )}
       {tableMin && (
         <Burger isOpen={globalSideBar} handleClick={toggleGlobalSideBar} />
-      )}
-      {!tableMin && user && (
-        <div>
-          <ExitButton
-            showText={false}
-            styleBtn="red"
-            classNameBtn={style.btn}
-          />
-        </div>
       )}
     </header>
   );

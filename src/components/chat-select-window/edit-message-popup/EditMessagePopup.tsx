@@ -1,8 +1,6 @@
 import { FC, useContext, useEffect, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 
-import { ReactComponent as Cross } from '../../../assets/create-profile/cross.svg';
-
 import { MessageListItem } from '../../../types/chat/messageListItem';
 import Button from '../../../ui/custom-button/Button';
 import Popup from '../../../ui/popup/Popup';
@@ -11,7 +9,11 @@ import { WebSocketContext } from '../../../providers/Websoket';
 
 import 'react-quill/dist/quill.snow.css';
 import useWindowResize from '../../../hooks/useWindowResize';
+
+import CrossBtn from '../../../ui/cross-button/CrossBtn';
+
 import style from './editMessagePopup.module.scss';
+
 import './quill.custom.css';
 
 interface EditMessagePopupProps {
@@ -65,10 +67,7 @@ const EditMessagePopup: FC<EditMessagePopupProps> = ({
       isOpen={isOpen}
     >
       <div className={style.editingMessageTitleWrapper}>
-        <Cross
-          onClick={() => setEditingMessage(null)}
-          className={style.btn_svg}
-        />
+        <CrossBtn onClick={() => setEditingMessage(null)} />
         <h3 className={style.editingMessageTitle}>Редактирование сообщения</h3>
       </div>
       <form

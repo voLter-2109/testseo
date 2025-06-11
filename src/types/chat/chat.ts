@@ -1,5 +1,6 @@
 import { BaseListProps } from '../api/serverResponse';
 import { DoctorSpecialization } from '../doctor/doctor';
+import { TChannels } from '../websoket/websoket.types';
 
 // тип по запросу chat/list
 export interface ChatsListItem {
@@ -28,8 +29,8 @@ export interface ChatsListItem {
     uid: string;
   } | null;
 
-  chat_name: string;
-  is_channel: boolean;
+  name: string;
+  type: TChannels;
   chat_key: string;
 }
 

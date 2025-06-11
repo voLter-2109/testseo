@@ -1,5 +1,6 @@
 import { FromToUser, MessageListItem } from '../chat/messageListItem';
 
+export const CREATE_CHAT = 'create_chat';
 export const CREATE_TEXT_MESSAGE = 'create_text_message';
 export const NEW_STATUS_USER = 'new_status_user';
 export const NEW_STATUS_USER_ALL = 'get_status_list_chat';
@@ -95,6 +96,8 @@ export interface SendMessage {
 
 // props для функции отправки сообщения
 export interface THandleSendMessage {
+  type: TChannels;
+  chatKey: string;
   toUserUid: string;
   content: {
     textContent: string;
@@ -144,6 +147,44 @@ export interface RequestObjectOnlineStatus extends RequestObject {
   message: NewCheckOnline;
 }
 
+// _______________________________________________________________
+// типы чатов
+export enum TChannels {
+  CHAT = 'chat',
+  PUBLIC_GROUP = 'public-group',
+  PRIVATE_GROUP = 'private-group',
+  PUBLIC_CHANNEL = 'public-channel',
+  PRIVATE_CHANNEL = 'private-channel',
+}
+
+export interface ObjectCreateChannel {
+  name: string;
+  type: TChannels;
+  description: string;
+  avatar: {
+    filename: string;
+    data: string;
+  } | null;
+  uid_users_list: string[];
+}
+
+// тип который приходит от сокетов при ответе на метод "создание канала"
+export interface CreateChannelResponse extends RequestObject {
+  message: {
+    chat_key: string;
+    name: string;
+    type: TChannels;
+    description: string;
+    created_by: string;
+  };
+}
+
+// тип который нужно отправить в сокет для создания чата
+export interface CreateChannelPayload {
+  action: typeof CREATE_CHAT;
+  request_uid: string;
+  object: ObjectCreateChannel;
+}
 // _________________________________________________________________
 // тип useRef для записи ключей отправленных сообщений
 export interface RequestCreateSendMessage {
@@ -164,6 +205,15 @@ export interface RequestDeleteMessagesREf {
   };
 }
 
+// тип useRef для записи ключей по  созданию групп и каналов
+export interface RequestCreateChannelGroup {
+  [key: string]: {
+    message: ObjectCreateChannel;
+    request_uid: string;
+    handleAvatar: File[] | null;
+  };
+}
+
 // _______________________________________________________________
 // тип описывающий то что возвращает нос
 export interface WebSocketProps {
@@ -178,4 +228,5 @@ export interface WebSocketProps {
   handleChangeStatusReadMessage: (uid: string) => void;
   handleRepeatMessageSend: (requestUid: string) => void;
   handleEditMessage: (message: MessageListItem, content: string) => void;
+  createChannel: (obj: ObjectCreateChannel, avatarFile: File[] | null) => void;
 }

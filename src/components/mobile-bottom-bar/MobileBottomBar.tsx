@@ -14,12 +14,13 @@ const MobileBottomBar: FC = () => {
 
   const getIndicatorPosition = (pathname: string): string => {
     switch (pathname) {
-      case '/m':
-        return '20px';
-      case '/m/':
-        return '20px';
       case '/m/our-doctors':
+        return '20px';
+      case '/m':
         return '127px';
+      case '/m/':
+        return '127px';
+
       case '/m/settings':
         return '232px';
       default:

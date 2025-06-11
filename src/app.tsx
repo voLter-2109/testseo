@@ -6,6 +6,7 @@ import {
   CHAT_MOBILE_PAGE,
   CHAT_PAGE,
   CREATE_PROFILE_PAGE,
+  DOCTOR_PAGE,
   DOCUMENTS_PAGE,
   GLOBAL_LAYOUT,
   NOT_FOUND_PAGE,
@@ -19,6 +20,7 @@ import {
   VERIFICATION_PAGE,
 } from './constant/url-page.constants';
 import GlobalLayoutPage from './pages/chat/chat-layout/GlobalLayoutPage';
+import DoctorPage from './pages/doctor-page/DoctorPage';
 import NotFoundPage from './pages/not-found/NotFoundPage';
 import Test from './Test';
 import RootBoundaryComponent from './ui/error-component/RootBoundaryComponent';
@@ -98,8 +100,87 @@ const UserAgreement = React.lazy(
       /* webpackChunkName: "UserAgreement" */ './pages/documents-page/UserAgreement'
     )
 );
+// export const route = () =>
+//   createBrowserRouter([
+//     {
+//       element: <Suspense fallback={<GlobalLoading />}></Suspense>,
+//       errorElement: <RootBoundaryPage />,
+//       children: [
+//         {
+//           path: GLOBAL_LAYOUT,
+//           element: (
+//             <Suspense fallback={<GlobalLoading />}>
+//               <GlobalLayoutPage />
+//             </Suspense>
+//           ),
+//           errorElement: <RootBoundaryPage />,
+//           children: [
+//             {
+//               path: REGISTRATION_PAGE,
+//               element: (
+//                 <Suspense fallback={<GlobalLoading />}>
+//                   <RegistrationPage />
+//                 </Suspense>
+//               ),
+//               errorElement: <RootBoundaryPage />,
+//             },
+//             // {
+//             //   path: VERIFICATION_PAGE,
+//             //   element: (
+//             //     <Suspense fallback={<GlobalLoading />}>
+//             //       <VerificationPage />
+//             //     </Suspense>
+//             //   ),
+//             //   errorElement: <RootBoundaryPage />,
+//             // },
+//             // {
+//             //   path: CHAT_PAGE,
+//             //   element: (
+//             //     <Suspense fallback={<OutletLoading />}>
+//             //       <ChatPageWeb />
+//             //     </Suspense>
+//             //   ),
+//             //   errorElement: <RootBoundaryPage />,
+//             //   children: [
+//             //     {
+//             //       path: USER_CHAT,
+//             //       element: (
+//             //         <Suspense fallback={<OutletLoading />}>
+//             //           <UserSelectChat />
+//             //         </Suspense>
+//             //       ),
+//             //       errorElement: <RootBoundaryComponent />,
+//             //     },
+//             //   ],
+//             // },
+//             // {
+//             //   path: OUR_DOCTORS_PAGE,
+//             //   element: (
+//             //     <Suspense fallback={<OutletLoading />}>
+//             //       <OurDoctors />
+//             //     </Suspense>
+//             //   ),
+//             //   errorElement: <RootBoundaryPage />,
+//             //   children: [
+//             //     {
+//             //       path: DOCTOR_PAGE,
+//             //       element: (
+//             //         <Suspense fallback={<OutletLoading />}>
+//             //           <DoctorPage />
+//             //         </Suspense>
+//             //       ),
+//             //       errorElement: <RootBoundaryComponent />,
+//             //     },
+//             //   ],
+//             // },
+//           ],
+//         },
+//       ],
+//     },
+//   ]);
 
 const App = () => {
+  console.log('APP');
   return (
     <>
       <Routes>
@@ -130,7 +211,16 @@ const App = () => {
                 <OurDoctors />
               </Suspense>
             }
-          />
+          >
+            <Route
+              path={DOCTOR_PAGE}
+              element={
+                <Suspense fallback={<OutletLoading />}>
+                  <DoctorPage />
+                </Suspense>
+              }
+            />
+          </Route>
 
           <Route
             path={DOCUMENTS_PAGE}

@@ -23,11 +23,13 @@ import ChatItemSkeleton from '../chat-item-skeleton/ChatItemSkeleton';
 
 import sortBySpecializationMatch from '../../hooks/sortBySpecializationMatch';
 
+import { getChatsList, getTextMessagesList } from '../../api/chat/chat';
+
+import { TChannels } from '../../types/websoket/websoket.types';
+
 import DefaultNavBarList from './search-nav-bar-list/DefaultNavBarList';
 import SearchNavBarList from './search-nav-bar-list/SearchNavBarList';
 import TopBar from './top-bar/TopBar';
-
-import { getChatsList, getTextMessagesList } from '../../api/chat/chat';
 
 import style from './chatWebLeftNavBar.module.scss';
 
@@ -264,12 +266,31 @@ const ChatWebNavBar: FC = () => {
     hasNextDoctorPage,
   ]);
 
-  const filteredChatList =
-    useMemo(() => {
+  const filteredChatList = useMemo(() => {
+    if (isShowArchivedChats) {
       return chatListStore.filter(
-        (item) => item.is_active !== (isShowArchivedChats || isShowChannels)
+        (item) => !item.is_active && item.type === TChannels.CHAT
       );
-    }, [chatListStore, isShowArchivedChats, isShowChannels]) || null;
+    }
+
+    if (isShowChannels) {
+      return chatListStore.filter(
+        (item) => item.is_active && item.type !== TChannels.CHAT
+      );
+    }
+
+    return chatListStore.filter(
+      (item) => item.is_active && item.type === TChannels.CHAT
+    );
+  }, [chatListStore, isShowArchivedChats, isShowChannels]);
+
+  const isArchiveEmpty = useMemo(
+    () =>
+      chatListStore.filter(
+        (item) => !item.is_active && item.type === TChannels.CHAT
+      ).length === 0,
+    [chatListStore]
+  );
 
   useEffect(() => {
     if (
@@ -333,14 +354,16 @@ const ChatWebNavBar: FC = () => {
       {!searchValue ? (
         !isShowArchivedChats && !isShowChannels ? (
           <>
-            <div className={style.icons} onClick={openArchive}>
-              <div className={style.iconsTitle}>
-                <div className={style.iconsIcon}>
-                  <ArchiveSvg />
+            {!isArchiveEmpty && (
+              <div className={style.icons} onClick={openArchive}>
+                <div className={style.iconsTitle}>
+                  <div className={style.iconsIcon}>
+                    <ArchiveSvg />
+                  </div>
+                  <h2 className={style.iconsCaption}>Архив</h2>
                 </div>
-                <h2 className={style.iconsCaption}>Архив</h2>
               </div>
-            </div>
+            )}
             <div className={style.icons} onClick={openChannels}>
               <div className={style.iconsTitle}>
                 <div className={style.iconsIcon}>
@@ -382,7 +405,6 @@ const ChatWebNavBar: FC = () => {
             isFetchChat={isFetchingGetChatListMessage}
             refDoctor={refLastDoctor}
             isShowArchivedChats={isShowArchivedChats}
-            isShowChannels={isShowChannels}
             chatList={filteredChatList}
             isTableBarActive={table ? isTableBarActive : true}
             refresh={handleResetValue}

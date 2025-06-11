@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { isWithinInterval } from 'date-fns';
 import dayjs from 'dayjs';
 import { FC, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -16,7 +17,6 @@ import InputErrorMessage from '../error-message/InputErrorMessage';
 
 import userStore from '../../../store/userStore';
 
-import { isWithinInterval } from 'date-fns';
 import style from './inputDate.module.scss';
 
 interface IInputDate extends React.InputHTMLAttributes<HTMLInputElement> {

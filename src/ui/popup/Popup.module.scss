@@ -38,9 +38,13 @@
   }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 600px) {
   .layout {
-    height: 80vh;
-    top: 80px;
+    height: 95vh;
+    top: 50px;
+  }
+  .content {
+    background: transparent;
+    border: none;
   }
 }

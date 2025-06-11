@@ -25,3 +25,9 @@
     border-radius: 3px 11px 3px 3px;
   }
 }
+
+@media screen and (max-width: 380px) {
+  .imageWrapper {
+    min-width: 100%;
+  }
+}
