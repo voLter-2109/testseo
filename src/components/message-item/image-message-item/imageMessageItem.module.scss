@@ -1,0 +1,9 @@
+.imageContainer {
+  display: inline-block;
+  width: 100%;
+  border-radius: 2px;
+
+  .lazyClass {
+    display: block !important;
+  }
+}

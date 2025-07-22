@@ -1,0 +1,14 @@
+.country {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+
+  & svg {
+    width: 15px;
+    height: 25px;
+    padding-bottom: 5px;
+  }
+}

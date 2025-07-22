@@ -1,0 +1,119 @@
+.navBar {
+  width: 360px;
+  height: 100%;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+
+  border-right: 1px solid rgba(128, 128, 128, 0.458);
+  background-color: var(--secondary-color);
+
+  @media (max-width: 540px) {
+    padding: 8px 20px;
+    width: 100vw;
+    height: 100svh;
+  }
+}
+
+.chatListWrapper {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px 2px;
+
+  @media (max-width: 540px) {
+    padding-bottom: 100px;
+  }
+}
+
+.tableNavBar {
+  width: 75px;
+  overflow: hidden;
+  transition: all 0.4s ease-out;
+  &:hover,
+  &:focus,
+  &:active {
+    width: 360px;
+    .icons {
+      &Caption {
+        opacity: 1;
+      }
+      &Icon {
+        width: 40px;
+        height: 40px;
+        svg {
+          width: 16px;
+          height: 16px;
+        }
+      }
+      .badge_table {
+        right: 0;
+        top: 0;
+      }
+    }
+    .topBarTitle {
+      opacity: 1;
+    }
+  }
+  .icons {
+    &Caption {
+      opacity: 0;
+    }
+    &Icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      background-color: var(--brand-blue-primary);
+    }
+  }
+}
+
+.icons {
+  cursor: pointer;
+
+  padding: 4px 7px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &Title {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  &Icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--brand-blue-primary);
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  &Caption {
+    font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    transition: all 0.3s ease;
+  }
+}
+
+.badge_table {
+  position: relative;
+  right: 20px;
+  top: 20px;
+}
+
+:root[data-theme='dark'] {
+  .backBtn {
+    path {
+      fill: #ffffff;
+    }
+  }
+}

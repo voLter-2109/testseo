@@ -1,0 +1,78 @@
+.wrapper {
+  .headerInf {
+    padding: 10px 10px 0 10px;
+  }
+
+  .closeContainer {
+    padding: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .hr {
+    background-color: rgba(128, 128, 128, 0.42);
+    height: 1px;
+    border: none;
+  }
+
+  .spinner {
+    height: 100%;
+    width: 100%;
+  }
+
+  .btn_svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  .infoBlock {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: center;
+
+    > button {
+      color: var(--main-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 90px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        box-shadow: var(--shadow-lg);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  &__loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+  }
+
+  .cancel_btn {
+    font-size: 1rem;
+    padding: 16px;
+  }
+}
+
+.inactiveTitle {
+  border-bottom: 1px solid var(--brand-blue-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+:root[data-theme='dark'] {
+  .btn_svg > path {
+    fill: white;
+  }
+}

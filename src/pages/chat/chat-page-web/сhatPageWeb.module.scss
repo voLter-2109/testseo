@@ -1,0 +1,27 @@
+.wrapper {
+  width: 90vw;
+  height: 83vh;
+  border: 1px solid rgba(128, 128, 128, 0.385);
+  display: flex;
+  overflow: hidden;
+  border-radius: 12px;
+  background-image: var(--background-main-line-gradient);
+
+  .navBar {
+    width: 360px;
+    height: 100%;
+    position: relative;
+    z-index: 199;
+  }
+
+  .tableNavBar {
+    width: 74px;
+    z-index: 200;
+    transition: width 0.4s ease-out;
+  }
+  .chatWindow {
+    flex: 1;
+    width: calc(90vw - 74px);
+    height: 100%;
+  }
+}

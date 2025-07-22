@@ -1,0 +1,77 @@
+.modal {
+  width: 50%;
+  height: 80vh;
+  overflow-y: auto;
+
+  .closeBtn {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+  }
+
+  @media only screen and (max-width: 900px) {
+    & {
+      width: 70%;
+    }
+  }
+  @media only screen and (max-width: 540px) {
+    & {
+      width: 95%;
+      height: 95%;
+    }
+  }
+}
+
+.form {
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+  height: fit-content;
+  max-height: 300px;
+
+  .title {
+    margin-bottom: 20px;
+  }
+}
+
+.formTitle {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.policeButton {
+  white-space: nowrap;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--brand-blue-primary);
+  text-decoration: none;
+}
+
+@media (max-width: 640px) {
+  .form {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 480px) {
+  .form {
+    transform: scale(0.8);
+  }
+
+  .formTitle {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 280px) {
+  .form {
+    width: 90%;
+  }
+}

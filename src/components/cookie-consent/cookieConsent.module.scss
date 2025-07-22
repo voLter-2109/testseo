@@ -1,0 +1,52 @@
+.popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 7px;
+  margin: 16px;
+  z-index: 10000;
+  background-color: var(--background-popup-content);
+  border: 1px solid var(--brand-blue-primary);
+  border-radius: 24px;
+  @media (max-width: 540px) {
+    top: 0;
+    bottom: unset;
+  }
+  &_show {
+    display: block;
+  }
+}
+
+.container {
+  position: relative;
+  text-align: center;
+  padding: 2px 32px;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  &:before {
+    display: inline-block;
+    content: '';
+    width: 30px;
+    height: 30px;
+    background: var(--side-bar-cross);
+  }
+}
+
+.buttonsContainer {
+  > button {
+    width: 120px;
+    min-height: unset;
+    padding: 2px;
+    margin: 10px 10px 0 0;
+  }
+}

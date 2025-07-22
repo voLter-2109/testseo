@@ -1,0 +1,51 @@
+все что переносим из старого проекта проверяем на лишний код и оптимизируем
+
+1. все кнопки через CustomButton
+2. большой и маленький логотип с текстом Logo
+3. спиннер Spiner
+4. заголовки Title
+5. inputs
+  5.0 Input with Label and InputErrorMessage
+  5.1 ClearFieldBtn
+  5.2 InputErrorMessage
+  5.3 InputForPhone
+  5.4 InputCheckboxPolicy
+  5.5 Label
+6. react-hot-toast const tost =() => : toast.success('Successfully created!');
+toast.error('This is an error!');
+toast.custom(<div>Hello World</div>);
+toast.loading('Waiting...');
+7. GlobalLoading - компонент загрузки с лого и спером, занимает всю ширину и высоту экрана
+8. OutletLoading  компонент загрузки с адаптивом, занимает всю ширину и высоту родитедя, например для outlet
+9.  const theme = useContext(ThemeContext); ThemeContext - на всякий случай для настройки адаптива
+10. ThemeSwitch, кнопка смены темы
+
+
+в рут стилях, есть несколько прописанных вариантов box-shadow
+
+Hooks:
+1. запись в local Storage- useLocalStorage (читай описание)
+2. вывод ошибки yup - useYapErrorMessage
+3. выдает текущую ширину и высоту окна - useWindowSize
+4. выдает boolean на основные размеры экрана и текущее устройство пользователя useWindowResize
+4. запускает функцию при размонтировании компонента useUnmount
+5. запускает обработчик событий (следит за монтирование и размонтированием) useEventListener
+6. хук отложенного запуска функции useDebounceCallback
+
+Валидация
+Для форм на странице ввода номера и пин кода: phonePageSchema
+
+UI:
+1. Burger
+
+Components:
+1. page NotFound
+2. form\formProvider
+3. LoginLayout - RegistrationPage
+4. ChatPageSideBar - Профиль пользователя (редактировать, выйти и т.д.) - левый side-bar в чате
+5. страницы с юридической информацией
+6. header с бургером и выезжающим меню 
+
+API:
+1. для запросов без авторизации - apiClassic
+2. с авторизацией - apiWithAuth

@@ -1,0 +1,11 @@
+.container {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 10px;
+
+  > div {
+    width: 100%;
+  }
+}

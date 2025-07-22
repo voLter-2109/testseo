@@ -1,0 +1,33 @@
+.imageWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  min-width: 370px;
+  gap: 5px;
+
+  // &_three {
+  //   & div:nth-child(2) {
+  //   }
+  // }
+
+  // &_five {
+  //   & div {
+  //   }
+  // }
+
+  img[data-element='1'] {
+    border-radius: 11px 3px 3px 3px;
+  }
+
+  img[data-element='2'] {
+    border-radius: 3px 11px 3px 3px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .imageWrapper {
+    min-width: 100%;
+  }
+}

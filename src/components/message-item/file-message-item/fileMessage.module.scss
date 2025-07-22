@@ -1,0 +1,32 @@
+.fileWrapper {
+  border: none;
+  margin-bottom: 10px;
+
+  .fileUrl {
+    overflow: hidden;
+    white-space: nowrap;
+    line-clamp: 1;
+    word-break: break-all;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    align-items: center;
+  }
+  .icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--brand-blue-primary);
+    border-radius: 12px;
+    > svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}

@@ -1,0 +1,275 @@
+.bar {
+  background: var(--background-chat);
+  position: relative;
+}
+
+.iconBar {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  opacity: 1;
+  transition: all 0.2s ease;
+  path {
+    stroke: #9f9fac;
+  }
+}
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.scale {
+  transform: scale(-1, 1);
+}
+
+.trash {
+  margin-right: 30px;
+  width: 25px;
+  height: 25px;
+  path {
+    fill: #9f9fac;
+  }
+}
+
+.bottomBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 16px;
+  height: 64px;
+  width: 100%;
+  padding: 8px 16px;
+  filter: drop-shadow(2px 4px 6px black);
+  background: var(--background-chat);
+}
+
+.select {
+  width: 100%;
+  height: 100%;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.messageForm {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+}
+
+.attachment {
+  visibility: hidden;
+  position: absolute;
+}
+
+.attachBtn {
+  cursor: pointer;
+}
+
+.message {
+  height: 100%;
+  width: 100%;
+  padding-left: 44px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: url('../../../assets/bottom-bar/pencil.svg') no-repeat 12px 50%;
+  background-color: var(--background-main);
+  color: var(--main-color);
+  font-size: 1.1rem;
+  word-break: break-all;
+  &::placeholder {
+    color: var(--text-disabled-color);
+  }
+}
+
+.btn {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  background: transparent;
+  fill: #9f9fac;
+}
+
+.crossButton {
+  width: 30px;
+  height: 30px;
+}
+
+.recording {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  > time {
+    width: 50px;
+  }
+  > button {
+    width: unset;
+    display: flex;
+
+    > svg {
+      width: 25px;
+      height: 25px;
+      path {
+        fill: var(--main-color);
+      }
+    }
+  }
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  background-color: var(--red-primary);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--red-primary);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(204, 169, 44, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+  }
+}
+
+.quillWrapper {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.quillMenu {
+  display: none;
+  position: absolute;
+  z-index: 12;
+}
+
+.quillMenu_active {
+  display: block;
+}
+
+.safari_contextMenu {
+  bottom: 110px !important;
+  left: 130px !important;
+}
+
+.contextMenu {
+  position: fixed;
+  visibility: visible;
+  bottom: 70px !important;
+  top: unset !important;
+  left: 5px !important;
+  z-index: 1001;
+  overflow: hidden;
+  border-radius: 5px;
+  padding: 4px;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--grey-primary);
+
+  @media not all and (min-resolution: 0.001dpcm) {
+    @supports (-webkit-appearance: none) {
+      & {
+        bottom: 110px !important;
+        left: 130px !important;
+      }
+    }
+  }
+
+  _::-webkit-full-page-media,
+  _:future,
+  :root & {
+    bottom: 110px !important;
+    left: 130px !important;
+  }
+
+  @media (max-width: 540px) {
+    bottom: 65px !important;
+  }
+  > div > div {
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+
+    .icon {
+      transform: scale(0.7);
+      fill: #9f9fac;
+    }
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--brand-blue-secondary);
+      }
+    }
+  }
+}
+
+.contextMenuHide {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.cursorDef {
+  cursor: not-allowed;
+
+  p {
+    cursor: not-allowed;
+  }
+
+  :global {
+    .ql-editor,
+    .ql-container {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.editingMenu {
+  padding: 8px;
+  background-color: white;
+}
+
+.editingTextWrapper {
+  max-width: 80%;
+  overflow: auto;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.editingMenuTitle {
+  font-weight: 600;
+}
+
+.editingContentWrapper {
+  display: flex;
+  justify-content: space-between;
+  background: var(--brand-tertiory);
+  padding-left: 15px;
+  align-items: center;
+  border-radius: 7px;
+}
+
+:root[data-theme='dark'] {
+  .bottomBar {
+    background: var(--secondary-color);
+  }
+  .btn {
+    fill: #9f9fac;
+  }
+}

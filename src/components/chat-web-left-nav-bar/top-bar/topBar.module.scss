@@ -1,0 +1,55 @@
+.topBar {
+  width: 350px;
+  height: 48px;
+  display: flex;
+  gap: 8px;
+  padding: 8px 0 0 8px;
+  align-items: center;
+
+  @media (max-width: 540px) {
+    & {
+      width: 100%;
+    }
+  }
+
+  .search {
+    width: 90%;
+
+    @media (max-width: 540px) {
+      & {
+        width: 100%;
+      }
+    }
+  }
+
+  .addBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    .btn {
+      transition: all 0.3s ease;
+
+      path {
+        stroke: #9f9fac;
+      }
+
+      &:hover {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .attachBtn {
+    cursor: pointer;
+  }
+}
+
+:root[data-theme='dark'] {
+  .addBtn {
+    path {
+      fill: white;
+    }
+  }
+}

@@ -1,0 +1,76 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .changeNumber {
+    color: var(--text-disabled-color);
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    &:hover {
+      box-shadow: var(--shadow-lg);
+    }
+  }
+
+  .instruction {
+    text-align: center;
+    margin-bottom: 15px;
+
+    & span {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+  }
+  .pinBlock {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .errorMessage {
+      margin-top: 7px;
+    }
+
+    .pinCode {
+      border: 1px solid var(--brand-blue-primary) !important;
+      border-radius: 12px !important;
+      font-size: 1.25rem !important;
+      font-weight: 400 !important;
+      height: 70px !important;
+      width: 57px !important;
+      padding: 9px 6px !important;
+      color: var(--main-color) !important;
+      caret-color: var(--main-color) !important;
+      transition: all 0.3s !important;
+
+      &:focus {
+        border: 1px solid var(--brand-blue-primary) !important;
+        box-shadow: var(--shadow-2xl) !important;
+        color: var(--main-color) !important;
+      }
+
+      &:valid {
+        border: 1px solid var(--brand-blue-primary) !important;
+      }
+      &:invalid {
+        border: 1px solid var(--red-primary) !important;
+        color: var(--red-primary) !important;
+      }
+    }
+  }
+
+  @media (max-width: 640px) {
+    & {
+      transform: scale(0.9);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .formTitle {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+  }
+}

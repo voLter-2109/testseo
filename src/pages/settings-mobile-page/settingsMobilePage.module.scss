@@ -1,0 +1,56 @@
+.wrapper {
+  padding: 30px;
+  height: 100svh;
+  overflow-y: auto;
+  display: flex;
+  flex: 1 1;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--background-main);
+
+  @media screen and (max-width: 540px) {
+    & {
+      justify-content: flex-start;
+      gap: 30px;
+    }
+  }
+
+  > a {
+    display: block;
+    color: var(--brand-blue-primary);
+    font-size: 1rem;
+  }
+
+  .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    gap: 7px;
+    width: fit-content;
+    text-wrap: nowrap;
+    font-size: 1.2rem;
+    padding: 5px 10px;
+
+    @media (hover: hover) {
+      &:hover {
+        box-shadow: var(--shadow-lg);
+      }
+    }
+
+    svg {
+      transition: all 0.3s;
+    }
+    @media (hover: hover) {
+      &:hover svg path {
+        fill: var(--main-color);
+      }
+    }
+  }
+}
+
+:root[data-theme='dark'] {
+  .swiper_wrapper > svg path {
+    fill: #fff;
+  }
+}

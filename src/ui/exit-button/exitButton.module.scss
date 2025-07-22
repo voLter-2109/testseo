@@ -1,0 +1,14 @@
+.exit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  .red > path {
+    fill: var(--red-primary);
+  }
+
+  .blue > path {
+    fill: var(--brand-blue-primary);
+  }
+}

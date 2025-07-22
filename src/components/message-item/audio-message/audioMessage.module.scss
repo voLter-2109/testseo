@@ -1,0 +1,11 @@
+.audioWrapper {
+  height: 56px;
+  min-width: 250px;
+
+  @media only screen and (max-width: 700px) {
+    audio {
+      min-width: 180px;
+      width: 90%;
+    }
+  }
+}

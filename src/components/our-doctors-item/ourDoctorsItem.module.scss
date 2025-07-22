@@ -1,0 +1,48 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 250px;
+  height: 280px;
+  padding: 10px;
+  gap: 5px;
+  border: 1.5px solid var(--disabled-bg-color);
+  border-radius: 12px;
+  text-align: center;
+  transition: width 0.4s ease-out;
+  overflow: hidden;
+  background-color: var(--background-main);
+
+  .btnWrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btn {
+    width: 110px;
+  }
+
+  &_tansform {
+    width: 350px;
+  }
+  &_info {
+    overflow-y: auto;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      box-shadow: var(--shadow-lg);
+    }
+  }
+}
+
+.title {
+  font-weight: 500;
+  line-height: 1rem;
+  padding-top: 5px;
+}
+
+.text {
+  font-size: 0.8rem;
+  font-weight: 400;
+}

@@ -1,0 +1,38 @@
+.folder {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 4px 7px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &Container {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  &Icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--brand-blue-primary);
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &Caption {
+    font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    transition: all 0.3s ease;
+    color: var(--main-color);
+  }
+}

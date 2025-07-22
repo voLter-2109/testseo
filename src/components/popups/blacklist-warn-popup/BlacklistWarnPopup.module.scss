@@ -1,0 +1,65 @@
+.blackListWarnPopup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: 500px;
+  padding: 20px 24px;
+  border: none;
+  box-shadow: 0 0 24px 5px #1000c314;
+
+  .btn_svg {
+    width: 25px;
+    height: 25px;
+    transition: 0.3s all ease;
+
+    &:hover {
+      rotate: 180deg;
+    }
+  }
+
+  .lightTheme path {
+    fill: white;
+  }
+
+  .dialog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    .warn {
+      text-align: center;
+    }
+
+    .controls {
+      display: flex;
+      margin-top: 30px;
+      margin-bottom: 24px;
+      line-height: 28px;
+    }
+
+    .btn {
+      width: 206px;
+      height: 48px;
+      font-size: 18px;
+      letter-spacing: -0.4px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 500;
+    }
+
+    .ok {
+      margin-right: 32px;
+      padding: 5px 20px;
+      background-color: var(--brand-blue-hover);
+      color: #ffffff;
+    }
+
+    .cancel {
+      padding: 5px 35px;
+      border: 1px solid var(--brand-blue-hover); // #5856d6
+      color: var(--brand-blue-hover);
+      background-color: #fff;
+    }
+  }
+}

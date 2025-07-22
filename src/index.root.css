@@ -1,0 +1,155 @@
+:root {
+  --main-font-size: 14px;
+  --main-font: 'Rubik', sans-serif;
+  --anim-shadow: myAnim 10s ease infinite;
+  --text-color-black: #0a0a0a;
+  --text-color-white: #fff;
+  --text-disabled-color: #9f9fac;
+  --disabled-bg-color: #e5e5ea;
+  --red-primary: #ff3b30;
+  --green-primary: #19be6f;
+  --grey-primary: #8e8e93;
+  --grey-secondary: #aeaeb2;
+  --brand-tertiory: #fafaff;
+}
+
+:root[data-theme='light'] {
+  --main-color: rgb(0, 0, 0);
+  --main-color-rgb: 0, 0, 0;
+  --secondary-color: #fff;
+  --brand-blue-primary: #2724a1;
+  --brand-blue-hover: #5856d6;
+  --brand-blue-secondary: #eeeeff;
+
+  --graphic-grey-secondary: #676262b0;
+  --graphic-white: #fff;
+  --green-light: #e3ffea;
+
+  --background-main: #fff;
+  --background-main-line-gradient: linear-gradient(
+    24deg,
+    rgba(210, 227, 250, 1) 0%,
+    rgba(255, 255, 255, 1) 25%,
+    rgba(210, 227, 250, 1) 52%,
+    rgba(255, 255, 255, 1) 81%,
+    rgba(210, 227, 250, 1) 99%
+  );
+  --background-outlet: #eeeeff;
+  --background-popup-content: #fff;
+  --background-footer: #f2f2f2;
+  --background-chat: center / cover url('./assets/chat-window/background.png')
+    no-repeat;
+
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+  --shadow-context: 0px 0px 4px 0px rgb(0 0 0 / 0.25);
+
+  --shadow-anim-0: 14px 15px 50px -12px rgb(0 0 0 / 0.15);
+  --shadow-anim-25: 0 30px 50px -12px rgb(0 0 0 / 0.2);
+  --shadow-anim-50: -14px 15px 50px -12px rgb(0 0 0 / 0.25);
+
+  --logo: url('./assets/logo/logo.svg') no-repeat;
+  --logo-big: url('./assets/logo/logo_big.svg') no-repeat;
+  --sign-hover: url('./assets/header/sign_black.svg') no-repeat;
+  --side-bar-cross: url('./assets/side-menu/cross_black.svg') no-repeat;
+  --show-all-chat-list: url('./assets/chat-list/show_all_black.svg') no-repeat;
+  --more-button-chat: url('./assets/chat-top-bar/more_black.svg') no-repeat;
+  --add-button: url('./assets/side-menu/add_black.svg') no-repeat;
+  --search-button-chat: url('./assets/chat-top-bar/search_black.svg') no-repeat;
+  --notifications-button-chat: url('./assets/chat-top-bar/notifications_black.svg')
+    no-repeat;
+  --attachments-button-chat: url('./assets/chat-top-bar/attachments_black.svg')
+    no-repeat;
+  --back-btn-chat: url('./assets/chat-top-bar/back_black.svg') no-repeat;
+  --tg-icon: url('./assets/footer/telegram.svg') no-repeat;
+  --ok-icon: url('./assets/footer/ok.svg') no-repeat;
+  --vk-icon: url('./assets/footer/vk.svg') no-repeat;
+  --edit-icon: url('./assets/side-menu/edit.svg') no-repeat;
+  --blacklist-icon: url('./assets/side-menu/blacklist.svg') no-repeat;
+  --theme-icon: url('./assets/side-menu/dark_theme.svg') no-repeat;
+  --service-icon: url('./assets/side-menu/service-black.svg') no-repeat;
+}
+
+:root[data-theme='dark'] {
+  --main-color: rgb(255, 255, 255);
+  --main-color-rgb: 255, 255, 255;
+  --secondary-color: #0f1119;
+  --brand-blue-primary: #7d7be0;
+  --brand-blue-hover: #3f319b;
+  --brand-blue-secondary: #404456;
+
+  --graphic-black: #0a0a0a;
+  --green-light: #597d62;
+  --graphic-grey-secondary: #676262b0;
+
+  --background-main: rgb(27, 29, 38);
+  --background-main-line-gradient: linear-gradient(
+    90deg,
+    #03040c,
+    #030417,
+    #0c0326
+  );
+
+  --background-outlet: linear-gradient(90deg, #03040c, #030417, #0c0326);
+  --background-popup-content: rgb(0, 0, 0);
+  --background-footer: rgb(27, 29, 38);
+  --background-chat: rgb(27, 29, 38);
+
+  --black-veil: rgba(0, 0, 0, 0.5);
+
+  --shadow-lg: 0 7px 15px -3px rgba(255, 255, 255, 0.4),
+    0 4px 6px -4px rgb(255, 255, 255, 0.2);
+  --shadow-xl: 0 10px 15px -3px rgb(255 255 255 / 3%),
+    0 4px 6px -4px rgb(255 255 255 / 30%);
+  --shadow-2xl: 0 25px 50px -12px rgb(255, 255, 255, 0.35);
+
+  --shadow-context: 0px 0px 4px 4px rgb(255, 255, 255, 0.35);
+
+  --shadow-anim-0: 14px 20px 30px -12px rgb(255, 255, 255, 0.25);
+  --shadow-anim-25: 0 30px 30px -12px rgb(255, 255, 255, 0.3);
+  --shadow-anim-50: -14px 15px 30px -12px rgb(255, 255, 255, 0.35);
+
+  --logo: url('./assets/logo/logo_white.svg') no-repeat;
+  --logo-big: url('./assets/logo/logo_big_white.svg') no-repeat;
+  --sign-hover: url('./assets/header/sign_white.svg') no-repeat;
+  --side-bar-cross: url('./assets/side-menu/cross_white.svg') no-repeat;
+  --show-all-chat-list: url('./assets/chat-list/show_all_white.svg') no-repeat;
+  --more-button-chat: url('./assets/chat-top-bar/more_white.svg') no-repeat;
+  --search-button-chat: url('./assets/chat-top-bar/search_white.svg') no-repeat;
+  --notifications-button-chat: url('./assets/chat-top-bar/notifications_white.svg')
+    no-repeat;
+  --attachments-button-chat: url('./assets/chat-top-bar/attachments_white.svg')
+    no-repeat;
+  --back-btn-chat: url('./assets/chat-top-bar/back_white.svg') no-repeat;
+  --tg-icon: url('./assets/footer/telegram_dark.svg') no-repeat;
+  --ok-icon: url('./assets/footer/ok_dark.svg') no-repeat;
+  --vk-icon: url('./assets/footer/vk_dark.svg') no-repeat;
+  --edit-icon: url('./assets/side-menu/edit-dark.svg') no-repeat;
+  --blacklist-icon: url('./assets/side-menu/blacklist-dark.svg') no-repeat;
+  --theme-icon: url('./assets/side-menu/dark_theme-dark.svg') no-repeat;
+  --service-icon: url('./assets/side-menu/service.svg') no-repeat;
+}
+
+@keyframes myAnim {
+  0% {
+    box-shadow: var(--shadow-anim-0);
+  }
+  25% {
+    box-shadow: var(--shadow-anim-25);
+  }
+  50% {
+    box-shadow: var(--shadow-anim-50);
+  }
+
+  75% {
+    box-shadow: var(--shadow-anim-25);
+  }
+
+  100% {
+    box-shadow: var(--shadow-anim-0);
+  }
+}

@@ -1,0 +1,52 @@
+.attachmentPopup {
+  width: fit-content;
+}
+
+.header {
+  margin-bottom: 32px;
+}
+
+.previewContainer {
+  max-height: 70svh;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  padding: 0px 2px;
+  gap: 16px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  > div p {
+    max-width: 175px;
+  }
+}
+
+.buttons {
+  min-width: 280px;
+  margin-top: 32px;
+  display: flex;
+  gap: 16px;
+}
+
+.button {
+  width: 164px;
+  height: 49px;
+  font-size: 18px;
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 32px;
+  border-bottom: 1px solid var(--grey-primary);
+  .input {
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--grey-primary);
+  }
+  .icon {
+    width: 16px;
+    height: 16px;
+  }
+}

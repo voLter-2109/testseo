@@ -1,0 +1,27 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  width: 100%;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  color: var(--grey-primary);
+  max-height: 70svh;
+  overflow-y: auto;
+  margin-bottom: 20px;
+
+  .headerWrapper {
+    padding: 0px 20px 32px;
+    border-top-right-radius: 12px;
+
+    > h3 {
+      font-size: 1.5rem;
+      color: var(--main-color);
+    }
+
+    > h4 {
+      font-size: 1.1rem;
+    }
+  }
+}

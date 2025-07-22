@@ -1,0 +1,60 @@
+.menuWrapper {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  z-index: 9999;
+  background-color: var(--secondary-color);
+  box-shadow: var(--shadow-context);
+  padding: 5px;
+  border-radius: 5px;
+  min-width: 160px;
+}
+
+.menuButton {
+  padding: 5px;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  display: flex;
+
+  .redC {
+    color: var(--red-primary);
+  }
+
+  .icon {
+    transform: scale(0.8);
+  }
+  .trash {
+    transform: scale(0.7);
+  }
+
+  svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--brand-blue-secondary);
+    }
+  }
+}
+
+.menuContent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+:root[data-theme='dark'] {
+  .menuButton {
+    svg {
+      fill: var(--main-color);
+    }
+    svg > path {
+      fill: white;
+    }
+  }
+}

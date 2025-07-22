@@ -1,0 +1,17 @@
+.ql-container.ql-snow {
+  border: none;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.ql-editor {
+  padding: 12px 0;
+  font-size: 1.1rem;
+  line-height: inherit;
+}
+
+.ql-editor.ql-blank::before {
+  left: 0;
+  font-style: normal;
+  color: var(--text-disabled-color);
+}

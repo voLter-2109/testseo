@@ -1,0 +1,82 @@
+.wrapper {
+  padding: 30px 40px 30px;
+  background-color: var(--background-footer);
+  font-size: 0.9rem;
+  box-shadow:
+    0 -10px 15px -3px rgba(0 0 0 / 0.1),
+    0 -4px 6px -4px rgba(0 0 0 / 0.1);
+  .main {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 32px;
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 245px;
+      > h3 {
+        font-size: 1.35rem;
+      }
+      .social {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        > a {
+          content: '';
+          display: block;
+          width: 24px;
+          height: 24px;
+        }
+        .tg {
+          background: var(--tg-icon);
+        }
+        .ok {
+          background: var(--ok-icon);
+        }
+        .vk {
+          background: var(--vk-icon);
+        }
+      }
+    }
+    .logoWrapper {
+      margin-right: auto;
+    }
+  }
+  .info {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    > p {
+      width: 342px;
+      font-size: 0.77rem;
+    }
+    > div {
+      display: flex;
+      flex-direction: row;
+      gap: 24px;
+      > span {
+        content: '';
+        display: block;
+        width: 85px;
+        height: 25px;
+        background-repeat: no-repeat;
+        padding: 20px;
+      }
+      .google {
+        background-image: url(../../assets/footer/google_play.svg);
+      }
+      .store {
+        background-image: url(../../assets/footer/app_store.svg);
+      }
+    }
+  }
+}
+
+@media (max-width: 540px) {
+  .wrapper {
+    display: none;
+  }
+}

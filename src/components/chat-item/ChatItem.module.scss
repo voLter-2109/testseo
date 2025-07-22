@@ -1,0 +1,128 @@
+.chatItem {
+  display: flex;
+  box-shadow: var(--shadow-lg);
+  transition: 0.3s all ease;
+  padding: 3px 4px 3px 6px;
+  gap: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  height: 74px;
+  border-radius: 12px;
+
+  &.isActive {
+    box-shadow: 0px 0px 7px 0 var(--main-color);
+  }
+
+  &.isPending {
+    border: 1px solid red;
+  }
+
+  &.favorite {
+    border: 1px solid var(--brand-blue-primary);
+  }
+
+  .wrapperAvatar {
+    position: relative;
+  }
+
+  @media (min-width: 540px) {
+    & {
+      width: 350px;
+    }
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--brand-blue-secondary);
+    }
+  }
+  .chatItemAvatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & > img {
+      width: 55px;
+      height: 55px;
+    }
+  }
+  .content {
+    width: calc(100% - 132px);
+  }
+  .name {
+    color: var(--main-color);
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .message {
+    color: var(--grey-primary);
+    font-size: 0.9rem;
+    line-height: 20px;
+    font-weight: 400;
+    display: -webkit-box;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+    align-items: center;
+    font-size: 1rem;
+    line-height: 20px;
+    font-weight: 400;
+    &_bottom {
+      justify-content: flex-end;
+    }
+
+    .clip {
+      height: 1rem;
+    }
+  }
+  .date {
+    width: 100%;
+    height: auto;
+    min-height: 10px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    color: var(--grey-primary);
+    font-size: 0.8rem;
+  }
+  .specialization {
+    height: 1rem;
+    color: var(--brand-blue-primary);
+    font-size: 0.9rem;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+.badgeTable {
+  position: relative;
+  right: 290px;
+  top: 40px;
+  width: fit-content;
+  height: 25px;
+  &_active {
+    right: 0;
+    top: 0;
+  }
+}
+
+:root[data-theme='dark'] {
+  .clip > g > path {
+    fill: #fff;
+  }
+}

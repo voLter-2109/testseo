@@ -1,0 +1,10 @@
+.formShadow {
+  &:not(:disabled) {
+    box-shadow: var(--shadow-lg);
+  }
+
+  &:not(:disabled):focus-visible {
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--main-color);
+  }
+}

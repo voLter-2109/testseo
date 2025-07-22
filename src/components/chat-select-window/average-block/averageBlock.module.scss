@@ -1,0 +1,72 @@
+.blackListInfo {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  text-align: center;
+  opacity: 1;
+  transition: all 0.3s ease;
+
+  &.opac {
+    opacity: 0;
+  }
+
+  &.repliedWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 0 0 8px;
+    background: var(--background-chat);
+    border-radius: 0;
+  }
+  :root[data-theme='dark'] {
+    .repliedWrapper {
+      background: var(--secondary-color);
+    }
+  }
+
+  .repIcon {
+    transform: scale(-1, 1);
+    path {
+      stroke: #9f9fac;
+    }
+  }
+
+  .clearRep {
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    path {
+      stroke: #9f9fac;
+    }
+
+    &:hover {
+      transform: rotate(180deg);
+    }
+  }
+
+  .replied {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 4px;
+    border-left: 2px solid var(--brand-blue-hover);
+
+    > span {
+      font-size: 12px;
+    }
+  }
+}
+
+.dateInfo {
+  height: 23px;
+  width: 100%;
+  text-align: center;
+
+  .dateText {
+    padding: 1px 12px;
+    border-radius: 16px;
+    background-color: #d1d1d6;
+    color: var(--text-color-black);
+  }
+}

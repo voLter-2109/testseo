@@ -1,0 +1,12 @@
+.divider {
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #00000023;
+  margin: 12px 0;
+}
+
+:root[data-theme='dark'] {
+  .divider {
+    border-bottom: 1px solid #e0e0e65c;
+  }
+}

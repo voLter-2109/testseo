@@ -1,0 +1,63 @@
+.waveserfer {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 95%;
+  max-width: 100%;
+  margin: 10px;
+  overflow: hidden;
+
+  .playPause {
+    width: 40px;
+    height: 40px;
+    background-color: #6c5ce7;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background-color: #5a4bd8;
+    }
+
+    svg {
+      fill: #e3ffea;
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+  }
+
+  .waveAndTime {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .playerBlock {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .sizeBlock {
+    width: 100%;
+    height: 28px;
+    overflow: hidden;
+  }
+
+  .timeInfo {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 12px;
+    font-weight: normal;
+    color: #5a4bd8;
+    line-height: 1;
+  }
+}

@@ -1,0 +1,116 @@
+.topBar {
+  padding: 0 16px;
+  height: 48px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--secondary-color);
+  filter: drop-shadow(0px -4px 6px black);
+  position: relative;
+
+  .iconBar {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    opacity: 1;
+    transition: all 0.2s ease;
+    path {
+      stroke: #9f9fac;
+    }
+  }
+
+  .trash {
+    margin-right: 30px;
+    width: 25px;
+    height: 25px;
+    path {
+      fill: #9f9fac;
+    }
+  }
+
+  .hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .clear_btn {
+    margin-left: 5px;
+    .lightTheme path {
+      fill: white;
+    }
+    .btn_svg {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  .info {
+    margin: 14px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding-right: 10px;
+    margin-right: auto;
+
+    .timeOnline {
+      font-size: 0.8rem;
+      color: #9f9fac;
+    }
+    > p {
+      display: -webkit-box;
+      line-clamp: 1;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  .icons {
+    > button {
+      background-color: transparent;
+      box-sizing: unset;
+      border: 1px solid transparent;
+      width: 24px;
+      min-height: unset;
+      height: 24px;
+      padding: 0;
+      @media (hover: hover) {
+        &:hover {
+          filter: drop-shadow(0 0 3px var(--brand-blue-primary));
+          transition: all 0.5s ease;
+        }
+      }
+    }
+    .search_btn {
+      background: var(--search-button-chat);
+    }
+  }
+
+  .back_btn {
+    position: static;
+    width: 24px;
+    min-height: unset;
+    height: 24px;
+    min-width: 24px;
+    border: none;
+    background: var(--back-btn-chat);
+    @media (hover: hover) {
+      &:hover {
+        filter: unset;
+      }
+    }
+  }
+
+  .verifiedIcon {
+    stroke: rgb(40, 194, 40);
+  }
+
+  .inputSearch {
+    width: 90%;
+  }
+}

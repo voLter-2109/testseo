@@ -1,0 +1,19 @@
+.topBarHeader {
+  display: flex;
+  align-items: center;
+  height: 59px;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 25px;
+  padding: 4px 25px;
+
+  .topBarTitle {
+    font-size: 18px;
+    text-wrap: nowrap;
+  }
+  .backBtn {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+  }
+}

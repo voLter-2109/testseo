@@ -1,0 +1,114 @@
+.chat {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+
+  .chatWindow {
+    overflow: hidden;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+
+    @media (max-width: 540px) {
+      height: 100svh;
+    }
+
+    .averageBlock {
+      background: var(--background-chat);
+      flex: 1;
+      width: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      position: relative;
+
+      .searchMessage {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        right: -110%;
+        visibility: hidden;
+        transition: all 0.4s ease-in-out;
+        background: var(--background-chat);
+
+        &.searchMesOpen {
+          visibility: visible;
+          top: 0;
+          right: 0;
+        }
+      }
+    }
+  }
+
+  .information {
+    width: 0px;
+    opacity: 0;
+    overflow: hidden;
+    height: 100%;
+    transition: all 0.4s ease-in-out;
+    visibility: hidden;
+    border-left: 1px solid gray;
+    background-color: var(--secondary-color);
+
+    &.isOpen {
+      width: 333px;
+      opacity: 1;
+      visibility: visible;
+      overflow-y: auto;
+      overflow: hidden;
+
+      @media (max-width: 880px),
+        screen and (min-width: 1024px) and (max-width: 1150px) {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+      }
+    }
+  }
+}
+
+.attachmentPopup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  .btn_svg {
+    width: 25px;
+    height: 25px;
+    transition: 0.3s all ease;
+
+    &:hover {
+      rotate: 180deg;
+    }
+
+    > path {
+      fill: var(--main-color);
+    }
+  }
+}
+
+.dragOverlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dragOverlayText {
+  color: white;
+  font-size: 24px;
+  font-weight: 600;
+  user-select: none;
+}

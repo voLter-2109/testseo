@@ -1,0 +1,14 @@
+.layout {
+  color: var(--text-disabled-color);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0;
+
+  display: block;
+  margin-bottom: 4px;
+
+  & span {
+    color: var(--red-primary);
+  }
+}

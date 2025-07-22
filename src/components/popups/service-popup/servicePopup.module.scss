@@ -1,0 +1,88 @@
+.servicePopup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 500px;
+  padding: 20px 24px;
+  border: none;
+  box-shadow: 0 0 24px 5px #1000c314;
+
+  .serviceFormPopup {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .serviceFormHeader {
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+  }
+
+  .btn_svg {
+    width: 25px;
+    height: 25px;
+    transition: 0.3s all ease;
+
+    &:hover {
+      rotate: 180deg;
+    }
+  }
+
+  .lightTheme path {
+    fill: white;
+  }
+
+  .serviceForm {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+  }
+
+  .wrapper {
+    width: 100%;
+    transition: all 0.3s;
+    margin-bottom: 18px;
+
+    .wrapperInput {
+      height: fit-content;
+      min-width: 250px;
+      background-color: var(--text-color-white);
+      color: var(--text-color-black);
+
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid var(--text-disabled-color);
+
+      @media (hover: hover) {
+        &:hover,
+        &:focus-within,
+        &.focus {
+          box-shadow: var(--shadow-lg);
+        }
+      }
+
+      .textarea {
+        width: 100%;
+        height: 45px;
+        max-height: 450px;
+        min-height: 21px;
+        flex-grow: 1;
+        padding: 0;
+        letter-spacing: 0.08px;
+        background-color: var(--text-color-white);
+        color: var(--text-color-black);
+        border: none;
+        outline: none;
+      }
+    }
+  }
+}

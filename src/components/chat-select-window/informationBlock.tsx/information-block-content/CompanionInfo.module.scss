@@ -1,0 +1,32 @@
+.infoWrapper {
+  padding: 8px 20px;
+  text-align: center;
+
+  .infoHeader {
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: var(--main-color);
+    margin-bottom: 3px;
+  }
+
+  .infoText {
+    margin-bottom: 34px;
+    font-size: 1.1rem;
+    max-width: 100%;
+    color: #8e8e93;
+  }
+
+  .name {
+    font-size: 1.2rem;
+    color: var(--main-color);
+  }
+
+  .subs {
+    font-style: italic;
+    font-size: 1.1rem;
+  }
+
+  .subsNum {
+    font-weight: 500;
+  }
+}
